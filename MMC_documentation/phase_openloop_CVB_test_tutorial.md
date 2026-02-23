@@ -1,19 +1,73 @@
-# MMC phase test in open-loop
-### [Task 1] 3rd CARROTS Hackathon - Grenoble
+# MMC phase test in open-loop (Task 3 of 3rd CARROTS Hackathon - Grenoble)
 
 ## Objectives and context
 
+The objective of this task if to build a MMC phase considering that we already have two MMC stacks of 5 modules (one from GeePs and one from LAAS).
+
+<img width="350" height="569" alt="WP1Hackathon_objective" src="https://github.com/user-attachments/assets/2fd0f94b-d88b-4281-a67d-d3690338cbe5" />
+
+To do it we have to overcome some issues identified during the 1A work:
+
+### Issue #I1 - Presence of low-side filter
+
+The low-side filter formed by L1 and Clow1 causes oscillations in the generated stack voltage
+
+#### Proposition #P1c - Counter oscillations with ramping switching duty cycle
+
+A software only solution is to do a gradual increase of the duty cycle in the transition between disconnected and connected state of one module.
+
+### Issue #I2 - High frequency oscillations in ILow1 current measure
+
+The fact that the current measure is made between Clow1 and L1 causes the measurement to oscillate at high frequency.
+
+#### Proposition #P2b - External sensor connected to the SPIN
+
+Ideally, we would need a measurement unit to be connected to the TWIST/SPIN to supply the measurement. To avoid implementing the complete solution, we can emulate the idea by using a always bypassed module connected to the stack. This module can even be the Central Controller module.
+
+<img width="350" height="484" alt="MMC_arm_test_theoric_electrical_circuit_withCC" src="https://github.com/user-attachments/assets/ba956e8a-74b2-45dc-8999-a29053da289c" />
+
+### Issue #I3 – Bootstrap circuit
+
+The bootstrap capacitor discharges becauses it does not sustain operation at 50 Hz, causing the module to pass from connected to blocked state.
+
+#### Proposition #P3c - Operate in switch mode with connected state at duty cycle 0.95
+
+A software only solution is to operate at duty cycle 0.95 instead of 1 during connected state to avoid bootstrap capacitor discharge.
+
+### Issue #I4 - Capacitor module too small for operation at 50 Hz
+
+The high-side capacitor Chigh capacitance is of 188.4 µF, which is too small for 50 Hz operation.
+
+#### Proposition #P4c - Increasing module capacitance
+
+To do some of our test, we will need to increase the module capacitance by connecting capacitors in parallel to Vhigh and GND terminals of the module's boards.
+
+### Issue #I6 - Not possible to feed digital 6 V in series
+
+It is for now not possible to feed the digital 6 V in series due to fuses position:
+
+<img width="350" height="506" alt="image" src="https://github.com/user-attachments/assets/fd49fcc0-f103-41ab-a1d2-4157646520d0" />
+
+### Proposition #P6 - Improve the digital 6 V external supply configuration
+
+Basically we can make the 6 V supply in series if we change the fuse position:
+
+<img width="350" height="506" alt="MMC_6V_supply_series_modified" src="https://github.com/user-attachments/assets/74429f85-3bb0-4e70-9275-d5c2b8172429" />
+
+
 ## Required Hardware list
-- 11 TWIST boards with SPIN
+- 11 TWIST boards with SPIN (extra 5 if necessary?)
 - 2 DC power supplies of 6 V with minimum 2 A
-- 1 DC power supply of (48 V, 5 A)
-- Protection diode (at least 100 V)
-- 2 resistors of 15 $\Omega$
+- 2 DC power supply of (48 V, 5 A)
+- 2 Protection diodes (at least 100 V)
+- 2 DC bus capacitors around 4500 µF
+- 2 stack inductances around 50 mH
+- 1 variable resistor
 - 10 ethernet cables
 - PC 64-bits (windows or linux)
 - Oscilloscope
-- Current probes
-- BNC adaptors to differential voltage measurement or differential probes
+- Current probes (10 A peak-to-peak, 10 kHz)
+- Differential probes for voltage measurements
 
 ## Required Software list
 - Git
@@ -26,11 +80,12 @@ First, we need to load the base code from the stack test with CVB in the OwnTech
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
 3.	Go to platform.io icon <img width="34" height="36" alt="image" src="https://github.com/user-attachments/assets/7e95c1b1-b0ee-473a-b434-a95adbce17a5" />, go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB”.
 
-<img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/295e63d3-559a-4d32-9f65-5078789b8511" />
+<img width="300" height="235" alt="image" src="https://github.com/user-attachments/assets/295e63d3-559a-4d32-9f65-5078789b8511" />
 
 4.	Now you have the good code to start in your VScode.
 
 ## WP1 Task 3.1: Stack Hardware setup
+#### Subtask objective: Verify if stacks are still working individually.
 
 Repeat for the upper and lower stacks:
 
@@ -60,10 +115,18 @@ Repeat for the upper and lower stacks:
     - Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
     - TURN OFF all 6V External Auxiliary DC Power Supplies.
 
-## WP1 Task 3.2: Phase test using phase circuit#1
+## WP1 Task 3.2: Phase test using phase circuit#1 (no current)
+#### Subtask objective: Verify if stack voltages are well generated, having stepped waveform, and well synchronized, having 180° phase-shift.
 
-## WP1 Task 3.3: Phase test using phase circuit#2
 
-## WP1 Task 3.4: Phase test using phase circuit#3
+## WP1 Task 3.3: Phase test using phase circuit#2 (AC current)
+#### Subtask objective: Verify if a AC current proportional to AC voltage is generated.
 
-## WP1 Task 3.5: Phase test using phase circuit#4
+## WP1 Task 3.4: Phase test using phase circuit#3  (Negative stack currents)
+#### Subtask objective: Verify if the stack currents achieves negative values.
+
+
+## WP1 Task 3.5: Phase test using phase circuit#4 (Filtered AC current)
+#### Subtask objective: Verify if the stack currents are sinusoidal and if a AC sinusoidal current is generated.
+
+
