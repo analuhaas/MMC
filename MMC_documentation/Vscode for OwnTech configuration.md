@@ -11,9 +11,13 @@
 4) Install Visual Studio Code : Download Visual Studio Code from https://code.visualstudio.com/. It will offer the appropriate version based on your operating system.								
 
 5) In Vscode, install C/C++ extension
-  5a) Launch Visual Studio Code.				
+   
+  5a) Launch Visual Studio Code.		
+  
   5b) In the sidebar, click the Extensions icon <img width="28" height="25" alt="image" src="https://github.com/user-attachments/assets/072424e4-6c0a-4665-837b-32386dca1b3c" />
+  
   5c)  In the search bar, type “C/C++”, then click Install.				
+  
   5d) After installed, restart Visual Studio Code.				
 
 <img width="429" height="111" alt="image" src="https://github.com/user-attachments/assets/aeaaa985-9193-442e-a981-f69dd5c63c10" />
@@ -21,8 +25,11 @@
 6) Install de PlatformIO extension								
 
 6a) Launch Visual Studio Code.				
+
 6b) In the left-hand menu, click on the Extensions icon <img width="28" height="25" alt="image" src="https://github.com/user-attachments/assets/a08c44f2-f90f-419e-8703-9eac2787c057" />
+
 6c)  In the search bar, type “PlatformIO IDE,” then click Install				
+
 6d) After installed, restart Visual Studio Code.				
 
 <img width="798" height="210" alt="image" src="https://github.com/user-attachments/assets/e5712372-ac7a-411a-9ebc-923d44cf74ff" />
@@ -32,7 +39,7 @@
 7) In Visual Studio Code, in the side menu, click on the PlatformIO icon <img width="35" height="35" alt="image" src="https://github.com/user-attachments/assets/0fbf82b2-dca9-478d-a8d9-9b822cf7ab05" />
 								
 
-8) In PlatformIO, select Clone Git Project. PlatformIO will open a field where you can paste the following URL: https://github.com/owntech-foundation/Core.git . PlatformIO will ask where to clone the project. Choose a folder you previously created.								
+8) In PlatformIO, select Clone Git Project. PlatformIO will open a field where you can paste the following URL: https://github.com/owntech-foundation/Core.git .PlatformIO will ask where to clone the project. Choose a folder you previously created.								
 
 <img width="953" height="304" alt="image" src="https://github.com/user-attachments/assets/4fce35be-f936-4b5c-9c75-c7088be0b559" />
 
