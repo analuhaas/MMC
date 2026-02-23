@@ -2,7 +2,7 @@
 
 ## Objectives and context
 
-The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy without and with CVB. For that, we use the two circuit structure below. $R_{dec}$ resistance is connected in parallel to the stack for circuit #2 in order to emulate negative currents discharging the modules capacitor.
+The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy with CVB. For that, we use the two circuit structure below. $R_{dec}$ resistance is connected in parallel to the stack for circuit #2 in order to emulate negative currents discharging the modules capacitor.
 
 <img width="877" height="492" alt="image" src="https://github.com/user-attachments/assets/7ffc269f-ad4d-4e96-b236-9b2980b45c47" />
 
@@ -177,6 +177,7 @@ If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expe
 For better results using circuit#2, add extra capacitance in parallel to high-side terminals (Vhigh and GND). You should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/d177bde0-d9d4-441b-9ec5-e075368b804e" />
+
 
 
 
