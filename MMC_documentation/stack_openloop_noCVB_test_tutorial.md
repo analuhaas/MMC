@@ -2,7 +2,7 @@
 
 ## Objectives and context
 
-The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy without and with CVB. For that, we use the two circuit structure below. $R_{dec}$ resistance is connected in parallel to the stack for circuit #2 in order to emulate negative currents discharging the modules capacitor.
+The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy without CVB. For that, we use the two circuit structure below. $R_{dec}$ resistance is connected in parallel to the stack for circuit #2 in order to emulate negative currents discharging the modules capacitor.
 
 <img width="877" height="492" alt="image" src="https://github.com/user-attachments/assets/7ffc269f-ad4d-4e96-b236-9b2980b45c47" />
 
@@ -51,7 +51,7 @@ It then generates the command to connect or disconnect the modules by setting th
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “MMC arm – no CVB” or “MMC arm – with CVB” according to the used test sequence.
+3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “MMC arm – no CVB”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/2f3caa34-4f95-4899-8ae6-8140fafcd1a4" />
 
@@ -108,7 +108,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 ## Executing the tutorial Stack test
 
-13.	Get the correct test code using “MMC arm – with CVB”  button.
+13.	Get the correct test code using “MMC arm – no CVB”  button.
 14.	Optional: Change the test parameters to have a more specific test:
 
   a.	In code: NLM frequency, number of modules.
@@ -170,20 +170,10 @@ If you perform the stack test without CVB using circuit#1 at 50 Hz, you should e
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/1b27f76a-5dd0-47a5-80e3-a7fed8be092f" />
 
-If you perform the stack test with CVB using circuit#1 at 50 Hz, you should expect an experimental result like this:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/b53197df-0e04-4373-9a4e-19670d97a4fc" />
-
 If you perform the stack test without CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/7c1e23fc-bbc7-4777-a98d-10d1599f19c7" />
 
-If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
 
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/3a35088d-f8fa-441f-a22e-0f7094d812e8" />
-
-For better results using circuit#2, add extra capacitance in parallel to high-side terminals (Vhigh and GND). You should expect an experimental result like this:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/d177bde0-d9d4-441b-9ec5-e075368b804e" />
 
 
