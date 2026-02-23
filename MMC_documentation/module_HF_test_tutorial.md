@@ -1,8 +1,8 @@
-# Individual MMC module test
+# Individual MMC module HF test
 
 ## Objectives and context
 
-The goal of this tutorial is to test a individual MMC module operation in all its states in both low and high frequency. For that, we used the circuit structure below. R_{dec} resistance is connected in parallel to the module in order to emulated negative currents discharging the module capacitor.
+The goal of this tutorial is to test a individual MMC module operation in all its states in high frequency. For that, we used the circuit structure below. R_{dec} resistance is connected in parallel to the module in order to emulated negative currents discharging the module capacitor.
 
 <img width="950" height="337" alt="image" src="https://github.com/user-attachments/assets/767e4a0e-1f4f-4deb-a81a-e97e42c9170a" />
 
@@ -29,11 +29,7 @@ All these different states are illustrated in the figure below according to the 
 
 <img width="1132" height="487" alt="image" src="https://github.com/user-attachments/assets/652a469a-8b22-483e-88c5-8a05e72940e8" />
 
-First, the individual module test is performed in low-frequency and then in high-frequency. The figure below shows the low-frequency test sequence. The user must manually TURN ON the udc power supply to start the sequence first part (positive current) and also TURN OFF udc to start the sequence second part (negative current).
-
- <img width="1058" height="329" alt="image" src="https://github.com/user-attachments/assets/b372ae91-24dc-4940-bb5d-f31a6c85fc2a" />
-
-The figure below shows the high-frequency test sequence. The user must manually TURN ON the udc power supply to start the sequence first part (positive current) and also TURN OFF udc to start the sequence second part (negative current).
+First, the individual module test is performed in low-frequency and then in high-frequency. The figure below shows the high-frequency test sequence. The user must manually TURN ON the udc power supply to start the sequence first part (positive current) and also TURN OFF udc to start the sequence second part (negative current).
 
 <img width="1196" height="273" alt="image" src="https://github.com/user-attachments/assets/398de20b-e65f-4635-873c-d428c7d0546c" />
 
@@ -58,7 +54,7 @@ The figure below shows the high-frequency test sequence. The user must manually 
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “Single MMC module – LF test (modified)” or “Single MMC module – HF test (modified)” according to the used test sequence.
+3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on  “Single MMC module – HF test (modified)”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/8f169340-3e0a-42a9-a91e-f5a9272749ab" />
 
@@ -115,46 +111,19 @@ iii.	DC power supply voltage.
   
  <img width="368" height="542" alt="image" src="https://github.com/user-attachments/assets/0f122b93-632a-467f-9edb-b42d6651bf6e" />
 
-## Executing the LF module test
-
-9.	Get the low-frequency test code using “Single MMC module – LF test” button.
-10.	Build and Upload the code main.cpp into the board
-11.	Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
-The boards starts in IDLE mode (equal to module blocked state).
-12.	TURN ON the main power supply output. This will start the sequence first part.
-13.	After you verify the first sequence part is finished (after 0.5 s),  TURN OFF the main power supply output. This will start the sequence second part.
-14.	TURN OFF the External Auxiliary DC Power Supply output.
-15.	Save your oscilloscope data.
-
 ## Executing the HF module test
 
-16.	Get the high-frequency test code using “Single MMC module – HF test” button.
-17.	Change the switching frequency parameter (up to 5 kHz)
-18.	Build and Upload the code main.cpp into the board
-19.	Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
+9.	Get the high-frequency test code using “Single MMC module – HF test” button.
+10.	Change the switching frequency parameter (up to 5 kHz)
+11.	Build and Upload the code main.cpp into the board
+12.		Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
 The boards starts in IDLE mode (equal to module blocked state).
-20.	TURN ON the main power supply output. This will start the sequence first part.
-21.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
-22.	TURN OFF the External Auxiliary DC Power Supply output.
-23.	Save your oscilloscope data.
+13. TURN ON the main power supply output. This will start the sequence first part.
+14. After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
+15.	TURN OFF the External Auxiliary DC Power Supply output.
+16.	Save your oscilloscope data.
 
 ## Expected results
-
-In the low-frequency sequence, the module expected behavior is as shown in the figure below.
-
-<img width="945" height="332" alt="image" src="https://github.com/user-attachments/assets/79af0cd9-b96a-43c0-8784-02632d4f7b1f" />
-
-If you perform the low-frequency test with external 6V and feeder disconnected from the circuit, you should expect an experimental result like this:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/7b0683e3-7c8e-42be-b1d0-32fb877f25ea" />
-
-The use of external 6 V auxiliary input changes module discharge behavior while in disconnected state due to feeder behavior:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/417b057a-e1a1-41cd-87e9-9574e940bc9f" />
-
-As in the low-frequency test, the high-frequency test module expected behavior is as shown in the figure below.
-
-<img width="1189" height="328" alt="image" src="https://github.com/user-attachments/assets/aa2afd3c-84cc-48d8-aa09-b6d71a25995c" />
 
 If you perform the high-frequency test, you should expect an experimental result like in the figure below. You can see that there are two moments where the module is commutated in high frequency:
 - Between 0.35 s and 0.38 s with $u_{dc}$ ON
@@ -165,4 +134,5 @@ If you perform the high-frequency test, you should expect an experimental result
 If you zoom between 0.35 s and 0.38 s where the module commutes with $u_{dc}$ ON:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
+
 
