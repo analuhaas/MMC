@@ -51,7 +51,7 @@ It then generates the command to connect or disconnect the modules by setting th
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB”.
+3.	Go to platform.io icon <img width="35" height="36" alt="image" src="https://github.com/user-attachments/assets/a5ff4ce7-f50e-4b0f-ba3e-278e39ba8759" />, go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/2f3caa34-4f95-4899-8ae6-8140fafcd1a4" />
 
@@ -120,7 +120,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   
   a.	Connect the board to the PC via a USB-C cable.
   
-  b.	Build and Upload the code main.cpp into the board
+  b.	Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
   
   c.	Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
 
@@ -153,16 +153,16 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 
 
-  d.	Do again: Build and Upload the code main.cpp into the board
+  d.	Do again: Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
 
 
-
-16. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
-17. After the capacitor voltages comes back to 0, TURN ON the main power supply u_{dc}.
-18. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
-19. After 20 s, TURN OFF the main power supply u_{dc}.
-20. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
-21. TURN OFF all 6V External Auxiliary DC Power Supplies.
+16. Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the Central Controller board.
+17. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
+18. After the capacitor voltages comes back to 0, TURN ON the main power supply u_{dc}.
+19. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
+20. After 20 s, TURN OFF the main power supply u_{dc}.
+21. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
+22. TURN OFF all 6V External Auxiliary DC Power Supplies.
 
 ## Expected results
 
@@ -177,6 +177,7 @@ If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expe
 For better results using circuit#2, add extra capacitance in parallel to high-side terminals (Vhigh and GND). You should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/d177bde0-d9d4-441b-9ec5-e075368b804e" />
+
 
 
 
