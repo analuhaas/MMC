@@ -54,7 +54,7 @@ First, the individual module test is performed in low-frequency and then in high
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on  “Single MMC module – HF test (modified)”.
+3.	Go to platform.io icon <img width="35" height="35" alt="image" src="https://github.com/user-attachments/assets/f61dfa9c-b0bf-4735-98dd-a1cb7a3e1107" />, go to Examples Twist under the Project Tasks tab and click on  “Single MMC module – HF test (modified)”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/8f169340-3e0a-42a9-a91e-f5a9272749ab" />
 
@@ -115,7 +115,7 @@ iii.	DC power supply voltage.
 
 9.	Get the high-frequency test code using “Single MMC module – HF test” button.
 10.	Change the switching frequency parameter (up to 5 kHz)
-11.	Build and Upload the code main.cpp into the board
+11.	Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board
 12.		Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
 The boards starts in IDLE mode (equal to module blocked state).
 13. TURN ON the main power supply output. This will start the sequence first part.
@@ -134,5 +134,6 @@ If you perform the high-frequency test, you should expect an experimental result
 If you zoom between 0.35 s and 0.38 s where the module commutes with $u_{dc}$ ON:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
+
 
 
