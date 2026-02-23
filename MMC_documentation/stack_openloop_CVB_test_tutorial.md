@@ -51,7 +51,7 @@ It then generates the command to connect or disconnect the modules by setting th
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “MMC arm – no CVB” or “MMC arm – with CVB” according to the used test sequence.
+3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/2f3caa34-4f95-4899-8ae6-8140fafcd1a4" />
 
@@ -166,17 +166,9 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 ## Expected results
 
-If you perform the stack test without CVB using circuit#1 at 50 Hz, you should expect an experimental result like this:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/1b27f76a-5dd0-47a5-80e3-a7fed8be092f" />
-
 If you perform the stack test with CVB using circuit#1 at 50 Hz, you should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/b53197df-0e04-4373-9a4e-19670d97a4fc" />
-
-If you perform the stack test without CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/7c1e23fc-bbc7-4777-a98d-10d1599f19c7" />
 
 If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
 
@@ -185,5 +177,6 @@ If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expe
 For better results using circuit#2, add extra capacitance in parallel to high-side terminals (Vhigh and GND). You should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/d177bde0-d9d4-441b-9ec5-e075368b804e" />
+
 
 
