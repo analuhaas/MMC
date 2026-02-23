@@ -64,3 +64,91 @@ First, we need to load the Single module test code from the OwnTech example repo
 
 4.	Now you have the good code to execute the tutorial in your VScode.
 
+## Hardware setup
+5.	Recommended for MMC use: Configure the board to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
+ In the TWIST board, it is possible to feed the auxiliary circuit of the board by 3 different ways:
+ 1)	Using the feeder to provide the 6 V auxiliary input
+ 2)	Feeding the 6 V auxiliary input externally: 
+ 3)	Feeding the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
+ The last one is preferable to MMC use cause the board feeder is not yet adapted to MMC charging phase. To do that:
+ - Connect an External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. Make sure this power supply OUTPUT IS OFF.
+   <img width="400" height="330" alt="image" src="https://github.com/user-attachments/assets/a94ab8b6-9aa4-456f-a9c2-988328fe550e" />
+ - Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
+   <img width="788" height="354" alt="image" src="https://github.com/user-attachments/assets/4ea8605a-20df-4adf-a9dc-0c007057e639" />
+
+6.	Recommended for MMC use: Disconnect the electrolytical capacitor of both Low1 and Low2 terminals adding the following code lines in the setup_routine() function
+
+ shield.power.disconnectCapacitor(LEG1);
+ shield.power.disconnectCapacitor(LEG2);
+
+ In the TWIST board electrical circuit, we see that Clow1 and Clow2 low-side capacitors are divided in a electrolytical part that is removable by Q5 and Q6 and a ceramic part. It is preferable that these capacitors are disconnected since they are not traditionally present in a Half-Bridge module circuit.
+
+ <img width="656" height="319" alt="image" src="https://github.com/user-attachments/assets/8ab85781-59dc-4b52-b1c4-91194d41f7ef" />
+
+ 7.	Connect the board with the power supply, the R and Rdec resistances, oscilloscope and PC as in the image: 
+<img width="1067" height="573" alt="image" src="https://github.com/user-attachments/assets/41cd7576-07c1-47ae-9e40-0f0423eca4d8" />
+
+ After making the connections and connecting the PC to board the USB-C cable, you should have something like this:
+
+8.	Configure your Oscilloscope with PicoScope (tutorial using PicoScope 4444):
+ a.	Make sure it acquires the following measurements:
+  i.	Module capacitor voltage (Vhigh to GND).
+  ii.	Module current.
+  iii.	DC power supply voltage.
+
+ b.	Use a 500 ms/div configuration with sampling rate to have 5 µs sampling.
+ <img width="241" height="464" alt="image" src="https://github.com/user-attachments/assets/5cf1f3be-8028-41da-925b-4e4f1639ef43" />
+
+ c.	Configure it to trigger when the power supply voltage rises up to 2 V.
+ <img width="368" height="542" alt="image" src="https://github.com/user-attachments/assets/0f122b93-632a-467f-9edb-b42d6651bf6e" />
+
+## Executing the LF module test
+
+9.	Get the low-frequency test code using “Single MMC module – LF test” button.
+10.	Build and Upload the code main.cpp into the board
+11.	Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
+The boards starts in IDLE mode (equal to module blocked state).
+12.	TURN ON the main power supply output. This will start the sequence first part.
+13.	After you verify the first sequence part is finished (after 0.5 s),  TURN OFF the main power supply output. This will start the sequence second part.
+14.	TURN OFF the External Auxiliary DC Power Supply output.
+15.	Save your oscilloscope data.
+
+## Executing the HF module test
+
+16.	Get the high-frequency test code using “Single MMC module – HF test” button.
+17.	Change the switching frequency parameter (up to 5 kHz)
+18.	Build and Upload the code main.cpp into the board
+19.	Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
+The boards starts in IDLE mode (equal to module blocked state).
+20.	TURN ON the main power supply output. This will start the sequence first part.
+21.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
+22.	TURN OFF the External Auxiliary DC Power Supply output.
+23.	Save your oscilloscope data.
+
+## Expected results
+
+In the low-frequency sequence, the module expected behavior is as shown in the figure below.
+
+<img width="945" height="332" alt="image" src="https://github.com/user-attachments/assets/79af0cd9-b96a-43c0-8784-02632d4f7b1f" />
+
+If you perform the low-frequency test with external 6V and feeder disconnected from the circuit, you should expect an experimental result like this:
+
+<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/7b0683e3-7c8e-42be-b1d0-32fb877f25ea" />
+
+The use of external 6 V auxiliary input changes module discharge behavior while in disconnected state due to feeder behavior:
+
+<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/417b057a-e1a1-41cd-87e9-9574e940bc9f" />
+
+As in the low-frequency test, the high-frequency test module expected behavior is as shown in the figure below.
+
+<img width="1189" height="328" alt="image" src="https://github.com/user-attachments/assets/aa2afd3c-84cc-48d8-aa09-b6d71a25995c" />
+
+If you perform the high-frequency test, you should expect an experimental result like in the figure below. You can see that there are two moments where the module is commutated in high frequency:
+- Between 0.35 s and 0.38 s with u_{dc} ON
+- Between 0.8 s and 0.83 s with u_{dc} OFF
+  
+<img width="935" height="428" alt="image" src="https://github.com/user-attachments/assets/ba3d743d-bbfb-4cd0-bbfd-01560cf40b05" />
+
+If you zoom between 0.35 s and 0.38 s where the module commutes with u_{dc} ON:
+
+<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
