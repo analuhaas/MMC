@@ -55,7 +55,7 @@ First, the individual module test is performed in low-frequency and then in high
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon  , go to Examples Twist under the Project Tasks tab and click on “Single MMC module – LF test (modified)”.
+3.	Go to platform.io icon <img width="35" height="36" alt="image" src="https://github.com/user-attachments/assets/d438a26a-e041-48ff-955b-d3b3a01fe9c4" />, go to Examples Twist under the Project Tasks tab and click on “Single MMC module – LF test (modified)”.
 
 <img width="456" height="358" alt="image" src="https://github.com/user-attachments/assets/8f169340-3e0a-42a9-a91e-f5a9272749ab" />
 
@@ -115,7 +115,7 @@ iii.	DC power supply voltage.
 ## Executing the LF module test
 
 9.	Get the low-frequency test code using “Single MMC module – LF test” button.
-10.	Build and Upload the code main.cpp into the board
+10.	Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
 11.	Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
 The boards starts in IDLE mode (equal to module blocked state).
 12.	TURN ON the main power supply output. This will start the sequence first part.
@@ -140,5 +140,6 @@ The use of external 6 V auxiliary input changes module discharge behavior while 
 If you zoom between 0.35 s and 0.38 s where the module commutes with $u_{dc}$ ON:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
+
 
 
