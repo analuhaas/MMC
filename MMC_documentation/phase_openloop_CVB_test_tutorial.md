@@ -116,17 +116,99 @@ Repeat for the upper and lower stacks:
     - TURN OFF all 6V External Auxiliary DC Power Supplies.
 
 ## WP1 Task 3.2: Phase test using phase circuit#1 (no current)
+
 #### Subtask objective: Verify if stack voltages are well generated, having stepped waveform, and well synchronized, having 180° phase-shift.
+
+
+<img width="300" height="639" alt="MMC_phase_test_circuit1_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/2141b051-88c0-4b76-a64e-02be3ce04db8" />
+
+MMC Data:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$
+
+By performing simulation with [phase circuit#1 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit1) we obtain the following simulation results:
+- There is only current for charging capacitors. Less than 1 A on the stack ($𝑖_{𝑢,𝑝}$ and $𝑖_{𝑙,𝑝}$)
+- Open circuit = No AC phase current
+
+<img width="1275" height="583" alt="image" src="https://github.com/user-attachments/assets/69d8366c-bdd3-4642-b6b2-55a1436de936" />
 
 
 ## WP1 Task 3.3: Phase test using phase circuit#2 (AC current)
 #### Subtask objective: Verify if a AC current proportional to AC voltage is generated.
 
+<img width="300" height="639" alt="MMC_phase_test_circuit2_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/33474dd4-71ba-4660-9fdf-43f3c3c99929" />
+
+MMC Data:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$
+- $𝑅=15 \Omega$
+
+By performing simulation with [phase circuit#2 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit2) we obtain the following simulation results:
+- AC phase current present but not sinusoidal
+- AC phase current has same format as AC voltage (resistance load)
+- Only positive currents on the stacks due to protection diodes
+
+<img width="6201" height="2835" alt="Circuit2_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/53187dc5-df82-44e4-b5dc-5c311b8cf09f" />
+
 ## WP1 Task 3.4: Phase test using phase circuit#3  (Negative stack currents)
 #### Subtask objective: Verify if the stack currents achieves negative values.
+
+<img width="300" height="639" alt="MMC_phase_test_circuit3_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/f626162a-e4a0-4c2d-b192-12da25898ed0" />
+
+MMC Data:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ or $𝐶=1868,4 \mu 𝐹$
+- $𝑅=15 \Omega$
+- $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$
+
+By performing simulation with [phase circuit#3 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit3) we obtain the following simulation results:
+- Negative currents but too much oscillations, probably due to fast current demand (small C) and switching harmonics
+- Harmonics also present on $i_Sigma$ current
+- Improved voltage and current outputs
+  
+<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/f16e4df0-a792-4d23-ab61-bb77071de245" />
+
+We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
+- Increasing C reduced oscillations but  stack current still have switching harmonics
+- Switching Harmonics still present on $i_Sigma$ current but reduced
+  
+<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/34e626a9-edac-4f8f-ab22-068dea0f6d8e" />
 
 
 ## WP1 Task 3.5: Phase test using phase circuit#4 (Filtered AC current)
 #### Subtask objective: Verify if the stack currents are sinusoidal and if a AC sinusoidal current is generated.
+
+<img width="300" height="639" alt="MMC_phase_test_circuit4_theoric_electrical_circuit (2)" src="https://github.com/user-attachments/assets/b57a9449-8169-4c1b-b5f0-d65b16265987" />
+MMC Data:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ or $𝐶=1868,4 \mu 𝐹$
+- $𝑅=15 \Omega$
+- $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$
+- $𝐿_{𝑠𝑡𝑎𝑐𝑘}=60 𝑚𝐻$
+
+By performing simulation with [phase circuit#4 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit4) we obtain the following simulation results:
+- Smooth stack current but deformed voltage because capacitors are too small makes charge/discharge fast
+- Phase voltage and current almost sinusoidal
+- 2 omega Harmonics present on $i_Sigma$ current
+  
+<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/07366fb0-2299-40c9-8cf9-282450400a25" />
+
+We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
+- Smooth current and stepped voltage on stack due to slower capacitor charge/discharge
+- Phase voltage and current sinusoidal
+- Almost null 2 omega Harmonics on $i_Sigma$ current
+  
+<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/74d6f3a2-f7de-4874-a943-10e6035690c2" />
+
+
+  
 
 
