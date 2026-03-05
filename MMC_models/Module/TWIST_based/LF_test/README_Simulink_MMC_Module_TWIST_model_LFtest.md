@@ -46,7 +46,6 @@ isC1low1Active = false; % true : Q5 is closed / false : Q5 is open
 isC2low1Active = false; % true : Q6 is closed / false : Q6 is open
 is6VExternallySupplied = false; % true : 6 V external supply is used to supply auxiliary circuits / false : feeder is used to supply auxiliary circuits
 isFeederJumperOpen = false; % true : feeder disconnected from the board circuit / false : feeder can be used
-C1low_variable = false; % true : feeder disconnected from the board circuit / false : feeder can be used
 ```
 
 - Inputs for simulation configuration
@@ -78,6 +77,7 @@ The simulation results can be observed via the scope area or one can plot extern
 ```
 out.modules : contains module current i_M1, module capacitor voltage Vc_M1 and module voltage Vm_M1
 out.bus_dc : contains protection diode voltage v_D, DC current i_dc and DC power supply voltage v_dc
+out.modes : contains module state information during sequence execution
 ```
 
 The outputs are saved if data_save option is true in to "sim_results" folder
@@ -93,3 +93,4 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
