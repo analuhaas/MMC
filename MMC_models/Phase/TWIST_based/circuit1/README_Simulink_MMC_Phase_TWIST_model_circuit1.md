@@ -4,7 +4,7 @@
 
 In this simulation we reproduce the experimental test of a MMC phase with 5 modules per stack (10 modules in total). The simulation can be either done using circuit 1, circuit 2, circuit 3, or circuit 4 represented in the figure.
 
-<img width="877" height="492" alt="image" src="https://github.com/user-attachments/assets/1170f8a5-6cde-487d-a8d3-f4be33b4dc3e" />
+<img width="3442" height="2016" alt="circuits_phase_reunis" src="https://github.com/user-attachments/assets/a0cde823-55ab-4fc0-b6b2-ec38cfede754" />
 
 In experiments, a TWIST board is used as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND). This is reproduced in Simulink using the TWIST board model.
 
@@ -140,3 +140,4 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
