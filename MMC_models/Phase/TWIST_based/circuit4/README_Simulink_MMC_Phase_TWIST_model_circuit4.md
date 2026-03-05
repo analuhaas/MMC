@@ -39,7 +39,7 @@ It then generates the command to connect or disconnect the modules by setting th
 
 The Simulink circuit of MMC_phase_hackathon_circuit4_HAAS_20260216.slx represents the experimental test circuit 4 for the phase. Extra capacitances can be added to the module via Vhigh terminals of the modules such as done experimentally.
 
-<img width="851" height="705" alt="image" src="https://github.com/user-attachments/assets/27818971-d585-4545-a4bb-ecbc971a92b1" />
+<img width="892" height="727" alt="image" src="https://github.com/user-attachments/assets/189ab877-137a-4d87-a62a-2de231605a09" />
 
 Inside the module block, the TWIST board model is used as programmed like a Half-Bridge (HB) module.
 
@@ -169,3 +169,4 @@ MMC Data for these simulations:
 - $𝑅=15 \Omega$
 - $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$
 - $𝐿_{𝑠𝑡𝑎𝑐𝑘}=60 𝑚𝐻$
+
