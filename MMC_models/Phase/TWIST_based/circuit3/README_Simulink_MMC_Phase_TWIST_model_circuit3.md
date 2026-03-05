@@ -6,7 +6,7 @@ In this simulation we reproduce the experimental test of a MMC phase with 5 modu
 
 <img width="3442" height="2016" alt="circuits_phase_reunis" src="https://github.com/user-attachments/assets/a0cde823-55ab-4fc0-b6b2-ec38cfede754" />
 
-Since we are using circuit 3, a AC current and also a circulating current will appear on the phase.
+Circuit 3 is a improvement of circuit 2 that allows negative arm currents since the protection diodes are placed before the DC bus capacitors.
 
 In experiments, a TWIST board is used as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND). This is reproduced in Simulink using the TWIST board model.
 
@@ -144,3 +144,26 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
+## Expected results
+
+By performing the simulation, we obtain the following simulation results:
+- Negative currents but too much oscillations, probably due to fast current demand (small C) and switching harmonics
+- Harmonics also present on $i_Sigma$ current
+- Improved voltage and current outputs
+  
+<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/f16e4df0-a792-4d23-ab61-bb77071de245" />
+
+We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
+- Increasing C reduced oscillations but  stack current still have switching harmonics
+- Switching Harmonics still present on $i_Sigma$ current but reduced
+  
+<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/34e626a9-edac-4f8f-ab22-068dea0f6d8e" />
+
+MMC Data for these simulations:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ or $𝐶=1868,4 \mu 𝐹$
+- $𝑅=15 \Omega$
+- $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$
