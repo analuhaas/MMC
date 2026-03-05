@@ -141,3 +141,16 @@ The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
 
+## Expected results
+
+By performing the simulation, we obtain the following simulation results:
+- There is only current for charging capacitors. Less than 1 A on the stack ($𝑖_{𝑢,𝑝}$ and $𝑖_{𝑙,𝑝}$)
+- Open circuit = No AC phase current
+
+<img width="1275" height="583" alt="image" src="https://github.com/user-attachments/assets/69d8366c-bdd3-4642-b6b2-55a1436de936" />
+
+MMC Data for this simulation:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$
