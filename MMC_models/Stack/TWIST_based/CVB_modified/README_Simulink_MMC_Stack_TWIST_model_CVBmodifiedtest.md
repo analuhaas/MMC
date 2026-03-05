@@ -24,7 +24,7 @@ This stepped wave-form output of the NLM indicates how many modules should be co
 
 In this simulation, the modulation is followed by a Capacitor Voltage Balancing (CVB) algorithm that chooses which modules to connect in order to have equilibrated voltage between all modules. The CVB algorithm makes is choice according to measured capacitor voltages and arm current as described in the algorithm schematic:
 
-<img width="945" height="390" alt="image" src="https://github.com/user-attachments/assets/636c67aa-bcf6-4b46-b763-debafd0bcee2" />
+<img width="2793" height="1093" alt="CVB_modified_logic" src="https://github.com/user-attachments/assets/4425e987-9548-4945-936f-24f6d2ddc737" />
 
 This algorithm is modified from the original CVB simulation to only connect/disconnect $\Delta N_{on}$ modules at a time to reduce oscillations in the generated stack voltage.
 
@@ -120,3 +120,4 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
