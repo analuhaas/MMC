@@ -12,7 +12,7 @@ The board serves as a HB module of the MMC by programming its second leg (LEG2) 
 
 The tutorial will consist of putting the module M1 in Disconnected, Connected and Blocked states according to the correspondence table below:
 
-<img width="609" height="102" alt="image" src="https://github.com/user-attachments/assets/b40040b7-96c9-4848-abca-fafacb5d3b94" />
+<img width="1352" height="261" alt="image" src="https://github.com/user-attachments/assets/7d381cb1-fced-4388-8abd-d87edbf79fba" />
 
 The module state is controlled using the board first leg (LEG1) switches Q1 and Q2 command (sw_{Q1} and sw_{Q2}):
 Connected state:
@@ -140,6 +140,7 @@ The use of external 6 V auxiliary input changes module discharge behavior while 
 If you zoom between 0.35 s and 0.38 s where the module commutes with $u_{dc}$ ON:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
+
 
 
 
