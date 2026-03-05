@@ -6,7 +6,7 @@ In this simulation we reproduce the experimental test of a MMC phase with 5 modu
 
 <img width="3442" height="2016" alt="circuits_phase_reunis" src="https://github.com/user-attachments/assets/a0cde823-55ab-4fc0-b6b2-ec38cfede754" />
 
-Since we are using circuit 4, a AC current and also a circulating current will appear on the phase.
+Circuit 4 is the final phase configuration, that filters the generated AC current with the inclusion of stack inductances in series with the stacks.
 
 In experiments, a TWIST board is used as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND). This is reproduced in Simulink using the TWIST board model.
 
@@ -144,3 +144,28 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
+## Expected results
+
+By performing the simulation, we obtain the following simulation results:
+- Smooth stack current but deformed voltage because capacitors are too small makes charge/discharge fast
+- Phase voltage and current almost sinusoidal
+- 2 omega Harmonics present on $i_Sigma$ current
+  
+<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/07366fb0-2299-40c9-8cf9-282450400a25" />
+
+We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
+- Smooth current and stepped voltage on stack due to slower capacitor charge/discharge
+- Phase voltage and current sinusoidal
+- Almost null 2 omega Harmonics on $i_Sigma$ current
+  
+<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/74d6f3a2-f7de-4874-a943-10e6035690c2" />
+
+MMC Data for these simulations:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ or $𝐶=1868,4 \mu 𝐹$
+- $𝑅=15 \Omega$
+- $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$
+- $𝐿_{𝑠𝑡𝑎𝑐𝑘}=60 𝑚𝐻$
