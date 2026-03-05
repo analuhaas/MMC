@@ -6,7 +6,7 @@ In this simulation we reproduce the experimental test of a MMC phase with 5 modu
 
 <img width="3442" height="2016" alt="circuits_phase_reunis" src="https://github.com/user-attachments/assets/a0cde823-55ab-4fc0-b6b2-ec38cfede754" />
 
-Since we are using circuit 2, a AC current and also a circulating current will appear on the phase.
+Circuit 2 is a improvement of circuit 1 since it allows a AC current and also a circulating current on the phase by including a load R.
 
 In experiments, a TWIST board is used as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND). This is reproduced in Simulink using the TWIST board model.
 
@@ -144,3 +144,19 @@ The outputs are saved if data_save option is true in to "sim_results" folder
 The simulink simulation window will appear and simulation will start
 
 6.	Observe the results via scope our by plotting the saved outputs
+
+## Expected results
+
+By performing the simulation, we obtain the following simulation results:
+- AC phase current present but not sinusoidal
+- AC phase current has same format as AC voltage (resistance load)
+- Only positive currents on the stacks due to protection diodes
+
+<img width="6201" height="2835" alt="Circuit2_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/53187dc5-df82-44e4-b5dc-5c311b8cf09f" />
+
+MMC Data for this simulation:
+
+- $𝑢_{𝑑𝑐} = 48 𝑉$
+- $𝑓=50 𝐻𝑧$
+- $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$
+- $𝑅=15 \Omega$
