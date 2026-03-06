@@ -48,7 +48,7 @@ First, the individual module test is performed in low-frequency and then in high
 - Git
 - Visual Studio Code with PlatformIO
 
-!!! If not done yet you should have done the initial tutorial on how to setup VScode for OwnTech usage.
+!!! If not done yet you should have done the initial [tutorial on how to setup VScode for OwnTech usage](https://github.com/analuhaas/MMC/blob/tutorials_updates/MMC_documentation/Vscode%20for%20OwnTech%20configuration.md).
 
 ## Get tutorial code from VScode
 
@@ -65,8 +65,8 @@ First, we need to load the Single module test code from the OwnTech example repo
 5.	Recommended for MMC use: Configure the board to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
    In the TWIST board, it is possible to feed the auxiliary circuit of the board by 3 different ways:
   	* Using the feeder to provide the 6 V auxiliary input
-   * Feeding the 6 V auxiliary input externally
-   * Feeding the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
+  	* Feeding the 6 V auxiliary input externally
+  	* Feeding the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
 
 The last one is preferable to MMC use cause the board feeder is not yet adapted to MMC charging phase. To do that:
 
@@ -79,9 +79,10 @@ The last one is preferable to MMC use cause the board feeder is not yet adapted 
 <img width="788" height="354" alt="image" src="https://github.com/user-attachments/assets/4ea8605a-20df-4adf-a9dc-0c007057e639" />
 
 6.	Recommended for MMC use: Disconnect the electrolytical capacitor of both Low1 and Low2 terminals adding the following code lines in the setup_routine() function
-
+```
  shield.power.disconnectCapacitor(LEG1);
  shield.power.disconnectCapacitor(LEG2);
+```
 
  In the TWIST board electrical circuit, we see that Clow1 and Clow2 low-side capacitors are divided in a electrolytical part that is removable by Q5 and Q6 and a ceramic part. It is preferable that these capacitors are disconnected since they are not traditionally present in a Half-Bridge module circuit.
 
@@ -104,11 +105,11 @@ ii.	Module current.
 
 iii.	DC power supply voltage.
 
-  	b.	Use a 500 ms/div configuration with sampling rate to have 5 µs sampling.
+b.	Use a 500 ms/div configuration with sampling rate to have 5 µs sampling.
    
  <img width="241" height="464" alt="image" src="https://github.com/user-attachments/assets/5cf1f3be-8028-41da-925b-4e4f1639ef43" />
  
-  c.	Configure it to trigger when the power supply voltage rises up to 2 V.
+c.	Configure it to trigger when the power supply voltage rises up to 2 V.
   
  <img width="368" height="542" alt="image" src="https://github.com/user-attachments/assets/0f122b93-632a-467f-9edb-b42d6651bf6e" />
 
@@ -137,9 +138,6 @@ The use of external 6 V auxiliary input changes module discharge behavior while 
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/417b057a-e1a1-41cd-87e9-9574e940bc9f" />
 
-If you zoom between 0.35 s and 0.38 s where the module commutes with $u_{dc}$ ON:
-
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/6266f19a-f249-4fea-8d58-2a6d034e123e" />
 
 
 
