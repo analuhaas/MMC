@@ -1,4 +1,4 @@
-# MMC phase test in open-loop (Task 3 of 3rd CARROTS Hackathon - Grenoble)
+# MMC phase test in open-loop (WP1 Task 3 of 3rd CARROTS Hackathon - Grenoble)
 
 ## Objectives and context
 
@@ -20,11 +20,9 @@ A software only solution is to do a gradual increase of the duty cycle in the tr
 
 The fact that the current measure is made between Clow1 and L1 causes the measurement to oscillate at high frequency.
 
-#### Proposition #P2b - External sensor connected to the SPIN
+#### Proposition #P2a Filtering Twist ILow1 current measure and align calibration protocol
 
-Ideally, we would need a measurement unit to be connected to the TWIST/SPIN to supply the measurement. To avoid implementing the complete solution, we can emulate the idea by using a always bypassed module connected to the stack. This module can even be the Central Controller module.
-
-<img width="350" height="484" alt="MMC_arm_test_theoric_electrical_circuit_withCC" src="https://github.com/user-attachments/assets/ba956e8a-74b2-45dc-8999-a29053da289c" />
+Ideally, we would need a measurement unit to be connected to the TWIST/SPIN to supply the measurement. To avoid implementing it for the hackathon, we can instead implement a hardware filter for I1low current measurement to reduce oscillations.
 
 ### Issue #I3 – Bootstrap circuit
 
@@ -116,11 +114,16 @@ Repeat for the upper and lower stacks:
     - TURN OFF all 6V External Auxiliary DC Power Supplies.
 
 ## WP1 Task 3.2: Phase test using phase circuit#1 (no current)
-
 #### Subtask objective: Verify if stack voltages are well generated, having stepped waveform, and well synchronized, having 180° phase-shift.
 
+Theoric circuit of the experiment:
 
-<img width="300" height="639" alt="MMC_phase_test_circuit1_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/2141b051-88c0-4b76-a64e-02be3ce04db8" />
+<img width="300" height="638" alt="MMC_phase_test_circuit1_theoric_electrical_circuit drawio" src="https://github.com/user-attachments/assets/eea289a9-014b-4ce0-93c1-9333f6584788" />
+
+Experimental circuit of the experiment:
+
+<img width="500" height="798" alt="MMC_phase_test_experimental_electrical_circuit1 drawio (2)" src="https://github.com/user-attachments/assets/e9bb875d-fac5-4318-924b-c77d05299f64" />
+
 
 MMC Data:
 
@@ -138,7 +141,14 @@ By performing simulation with [phase circuit#1 simulink](https://github.com/anal
 ## WP1 Task 3.3: Phase test using phase circuit#2 (AC current)
 #### Subtask objective: Verify if a AC current proportional to AC voltage is generated.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit2_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/33474dd4-71ba-4660-9fdf-43f3c3c99929" />
+Theoric circuit of the experiment:
+
+<img width="300" height="638" alt="MMC_phase_test_circuit2_theoric_electrical_circuit drawio (1)" src="https://github.com/user-attachments/assets/f70f479a-0c43-49d2-bf7f-ce82d9634eb0" />
+
+Experimental circuit of the experiment:
+
+<img width="500" height="798" alt="MMC_phase_test_experimental_electrical_circuit2 drawio" src="https://github.com/user-attachments/assets/3420e33d-e128-4a8b-ab17-a2ad76bc2dc4" />
+
 
 MMC Data:
 
@@ -154,10 +164,19 @@ By performing simulation with [phase circuit#2 simulink](https://github.com/anal
 
 <img width="6201" height="2835" alt="Circuit2_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/53187dc5-df82-44e4-b5dc-5c311b8cf09f" />
 
+Obs: the $i_{\Sigma} = \frac{i_u+i_l}{2}$ current presented here is the differential current that is composed of a DC component ($i_{dc}$ in the single-phase case) + AC component ($i_{circ}$ circulating current).
+
 ## WP1 Task 3.4: Phase test using phase circuit#3  (Negative stack currents)
 #### Subtask objective: Verify if the stack currents achieves negative values.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit3_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/f626162a-e4a0-4c2d-b192-12da25898ed0" />
+Theoric circuit of the experiment:
+
+<img width="300" height="638" alt="MMC_phase_test_circuit3_theoric_electrical_circuit drawio" src="https://github.com/user-attachments/assets/41dafb45-398d-47aa-a5cf-55ed635ef528" />
+
+Experimental circuit of the experiment:
+
+<img width="500" height="798" alt="MMC_phase_test_experimental_electrical_circuit3 drawio" src="https://github.com/user-attachments/assets/ab54141b-fcd3-459e-8cec-1e31186d4bd3" />
+
 
 MMC Data:
 
@@ -169,22 +188,35 @@ MMC Data:
 
 By performing simulation with [phase circuit#3 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit3) we obtain the following simulation results:
 - Negative currents but too much oscillations, probably due to fast current demand (small C) and switching harmonics
-- Harmonics also present on $i_Sigma$ current
+- Harmonics also present on $i_{\Sigma}$ current
 - Improved voltage and current outputs
   
 <img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/f16e4df0-a792-4d23-ab61-bb77071de245" />
 
+Obs: the $i_{\Sigma} = \frac{i_u+i_l}{2}$ current presented here is the differential current that is composed of a DC component ($i_{dc}$ in the single-phase case) + AC component ($i_{circ}$ circulating current).
+
+
 We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
 - Increasing C reduced oscillations but  stack current still have switching harmonics
-- Switching Harmonics still present on $i_Sigma$ current but reduced
+- Switching Harmonics still present on $i_{\Sigma}$ current but reduced
   
 <img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/34e626a9-edac-4f8f-ab22-068dea0f6d8e" />
+
+Obs: the $i_{\Sigma} = \frac{i_u+i_l}{2}$ current presented here is the differential current that is composed of a DC component ($i_{dc}$ in the single-phase case) + AC component ($i_{circ}$ circulating current).
 
 
 ## WP1 Task 3.5: Phase test using phase circuit#4 (Filtered AC current)
 #### Subtask objective: Verify if the stack currents are sinusoidal and if a AC sinusoidal current is generated.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit4_theoric_electrical_circuit (2)" src="https://github.com/user-attachments/assets/b57a9449-8169-4c1b-b5f0-d65b16265987" />
+Theoric circuit of the experiment:
+
+<img width="300" height="638" alt="MMC_phase_test_circuit4_theoric_electrical_circuit drawio (2)" src="https://github.com/user-attachments/assets/0ee93691-27af-49b0-a04c-823dcdd65c69" />
+
+Experimental circuit of the experiment:
+
+<img width="500" height="798" alt="MMC_phase_test_experimental_electrical_circuit4 drawio" src="https://github.com/user-attachments/assets/8f1507e0-f3c6-4605-af89-30e9d8c847ca" />
+
+
 MMC Data:
 
 - $𝑢_{𝑑𝑐} = 48 𝑉$
@@ -197,18 +229,24 @@ MMC Data:
 By performing simulation with [phase circuit#4 simulink](https://github.com/analuhaas/MMC/tree/tutorials_updates/MMC_models/Phase/TWIST_based/circuit4) we obtain the following simulation results:
 - Smooth stack current but deformed voltage because capacitors are too small makes charge/discharge fast
 - Phase voltage and current almost sinusoidal
-- 2 omega Harmonics present on $i_Sigma$ current
+- 2 omega Harmonics present on $i_{\Sigma}$ current
   
 <img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/07366fb0-2299-40c9-8cf9-282450400a25" />
+
+Obs: the $i_{\Sigma} = \frac{i_u+i_l}{2}$ current presented here is the differential current that is composed of a DC component ($i_{dc}$ in the single-phase case) + AC component ($i_{circ}$ circulating current).
+
 
 We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
 - Smooth current and stepped voltage on stack due to slower capacitor charge/discharge
 - Phase voltage and current sinusoidal
-- Almost null 2 omega Harmonics on $i_Sigma$ current
+- Almost null 2 omega Harmonics on $i_{\Sigma}$ current
   
 <img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/74d6f3a2-f7de-4874-a943-10e6035690c2" />
 
+Obs: the $i_{\Sigma} = \frac{i_u+i_l}{2}$ current presented here is the differential current that is composed of a DC component ($i_{dc}$ in the single-phase case) + AC component ($i_{circ}$ circulating current).
+
 
   
+
 
 
