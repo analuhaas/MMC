@@ -46,6 +46,8 @@ It then generates the command to connect or disconnect the modules by setting th
 - Git
 - Visual Studio Code with PlatformIO
 
+!!! If not done yet you should have done the initial [tutorial on how to setup VScode for OwnTech usage](https://github.com/analuhaas/MMC/blob/tutorials_updates/MMC_documentation/Vscode%20for%20OwnTech%20configuration.md).
+
 ## Get tutorial code from VScode
 
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
@@ -65,7 +67,11 @@ Repeat for the 5 modules boards:
 
 - Connect an External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. Make sure this power supply OUTPUT IS OFF.
 
+<img width="400" height="330" alt="image" src="https://github.com/user-attachments/assets/a94ab8b6-9aa4-456f-a9c2-988328fe550e" />
+
 - Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
+
+<img width="788" height="354" alt="image" src="https://github.com/user-attachments/assets/4ea8605a-20df-4adf-a9dc-0c007057e639" />
 
 6.	If not done yet: Test the module using the low-frequency and high-frequency sequences as explained in Individual MMC module test.
 
@@ -125,7 +131,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   c.	Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
 
 
-
+```
   /* -------------- BOARD IDENTIFICATION ----------------------- */
   
   
@@ -150,7 +156,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   constexpr uint32_t UID_MMC_SM9_BOARD = 0x1111BBB1;
   
   constexpr uint32_t UID_MMC_SM10_BOARD = 0x1111CCC2;
-
+```
 
 
   d.	Do again: Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
@@ -158,9 +164,9 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 16. Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the Central Controller board.
 17. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
-18. After the capacitor voltages comes back to 0, TURN ON the main power supply u_{dc}.
+18. After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
 19. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
-20. After 20 s, TURN OFF the main power supply u_{dc}.
+20. After 20 s, TURN OFF the main power supply $u_{dc}$.
 21. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
 22. TURN OFF all 6V External Auxiliary DC Power Supplies.
 
@@ -168,7 +174,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 If you perform the stack test with CVB using circuit#1 at 50 Hz, you should expect an experimental result like this:
 
-<img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/b53197df-0e04-4373-9a4e-19670d97a4fc" />
+<img width="1610" height="736" alt="image" src="https://github.com/user-attachments/assets/87679f64-be93-4977-98ad-f9ad75ca503d" />
 
 If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
 
@@ -177,6 +183,7 @@ If you perform the stack test with CVB using circuit#2 at 50 Hz, you should expe
 For better results using circuit#2, add extra capacitance in parallel to high-side terminals (Vhigh and GND). You should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/d177bde0-d9d4-441b-9ec5-e075368b804e" />
+
 
 
 
