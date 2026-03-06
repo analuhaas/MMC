@@ -7,7 +7,6 @@ clear all; clc;
 data_save = false; % true : save in a .mat file the following data : duty / VHigh / V1Low / V2Low / IHigh / I1Low / I2Low
 power_losses = false; % true : takes into account power losses from the MOSFETs / false : no power losses
 isInterleaved = false; % true : 180° phase shift between leg 1 and leg 2 / false : 0° phase shift
-HaveChargingPhase = true;
 isC1low1Active = false;
 isC2low1Active = false;
 is6VExternallySupplied = true;
@@ -30,8 +29,6 @@ Ts = 5e-7; % [s] Simulation sample period
 time_charge = 0.2; % [s] Charging time - used only if HaveChargingPhase = true
 time_decharge = 0.8; % [s] Decharging time
 
-duty_cycle_max = 0.95;
-duty_cycle_min = 0;
 %% Initialize twist parameters
 
 run(latest_twist_parameters);
@@ -43,20 +40,12 @@ else
 
 end
 
-% Initialize times and frequencies
-twist_freq_data_sampling = 20e3; %data sampling frequency
-twist_data_sampling_period = 1/twist_freq_data_sampling; %data sampling delay
-twist_data_acquisition_delay = 50e-9; %data acquisition at the peak of the carry
 %% Initialize MMC parameters
 
 run(latest_MMC_parameters);
 %% Setup depending on user configuration
 
-if(~HaveChargingPhase)
-    source_V = VDC/N;  %source voltage [V] - inicial module capacitor voltage
-else
-    source_V = 0;  %source voltage [V] - inicial module capacitor voltage
-end
+source_V = 0;  %source voltage [V] - inicial module capacitor voltage
 
 if(~isInterleaved)
     twist_phase_shift_leg_2_deg = 0; %no phase shift

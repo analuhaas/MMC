@@ -11,7 +11,6 @@ isC1low1Active = false;
 isC2low1Active = false;
 is6VExternallySupplied = false;
 isFeederJumperOpen = false;
-C1low_variable = false;
 
 
 %% Simulation configuration
@@ -32,13 +31,6 @@ t3 = 0.7;
 t4 = 0.8;
 Vdc_off_time = 0.45; %[s] time where VDC = 0V
 Vdc_on_time = 0; %[s] time where VDC = 40V
-
-%% Adaptation parameters
-
-%Power supply model
-power_supply_rC_up = 0.1;
-power_supply_rC_down = 7.016e-2;
-power_supply_C = 62.71e-2;
 
 %% Setup depending on user configuration
 
@@ -74,11 +66,6 @@ else
     feeder_current_lower_rate_limit = -10;
 
 end
-
-% Initialize times and frequencies
-twist_freq_data_sampling = 20e3; %data sampling frequency
-twist_data_sampling_period = 1/twist_freq_data_sampling; %data sampling delay
-twist_data_acquisition_delay = 50e-9; %data acquisition at the peak of the carry
 
 %% Start simulink simulation
 
