@@ -20,13 +20,7 @@ For example, if the modulation signal is 2.6, it is going to be attributed to le
 
 This stepped wave-form output of the NLM indicates how many modules should be connected in the stack ($N_{\left(u,l\right),p}^{on}$) according to time.
 
-The CVB algorithm consists of choosing which modules to connect in order to have equilibrated voltage between all modules. The CVB algorithm makes is choice according to measured capacitor voltages and stack current as described in the algorithm schematic:
-
-<img width="945" height="390" alt="image" src="https://github.com/user-attachments/assets/e4291600-ff51-4ed6-85ec-379306f665cd" />
-
-It then generates the command to connect or disconnect the modules by setting the gate command signals ($g_{\left(u,l\right),p}^{M1}$, $g_{\left(u,l\right),p}^{M2}$,..., $g_{\left(u,l\right),p}^{MN}$, to 1 (module connected) or 0 (module disconnected). The complete schematic of the open-loop control implemented:
-
-<img width="677" height="296" alt="image" src="https://github.com/user-attachments/assets/12229f3c-7100-4309-bea4-1ddf11bbbbc0" />
+In this code, no Capacitor Voltage Balancing (CVB) algorithm is used and the choice of connected modules is given by a fixed preference order M1 > M2 > M3 > M4 > M5
 
 ## Required Hardware list
 
@@ -46,6 +40,8 @@ It then generates the command to connect or disconnect the modules by setting th
 - Git
 - Visual Studio Code with PlatformIO
 
+!!! If not done yet you should have done the initial [tutorial on how to setup VScode for OwnTech usage](https://github.com/analuhaas/MMC/blob/tutorials_updates/MMC_documentation/Vscode%20for%20OwnTech%20configuration.md).
+
 ## Get tutorial code from VScode
 
 First, we need to load the Single module test code from the OwnTech example repository version in https://github.com/analuhaas/examples 
@@ -61,11 +57,16 @@ First, we need to load the Single module test code from the OwnTech example repo
 ## Modules hardware setup
 
 Repeat for the 5 modules boards:
+
 5.	Recommended for MMC use: Configure all 5 modules boards to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
 
 - Connect an External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. Make sure this power supply OUTPUT IS OFF.
 
+<img width="484" height="398" alt="image" src="https://github.com/user-attachments/assets/f5caa6e6-ef7e-4f1a-aa60-1a68abdd268f" />
+
 - Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
+
+<img width="905" height="407" alt="image" src="https://github.com/user-attachments/assets/44efddcc-3fd9-4731-bdc4-a89d235879e1" />
 
 6.	If not done yet: Test the module using the low-frequency and high-frequency sequences as explained in Individual MMC module test.
 
@@ -125,7 +126,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   c.	Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
 
 
-
+```
   /* -------------- BOARD IDENTIFICATION ----------------------- */
   
   
@@ -150,7 +151,7 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   constexpr uint32_t UID_MMC_SM9_BOARD = 0x1111BBB1;
   
   constexpr uint32_t UID_MMC_SM10_BOARD = 0x1111CCC2;
-
+```
 
 
   d.	Do again: Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
@@ -158,9 +159,9 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 16. Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the Central Controller board.
 17. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
-18. After the capacitor voltages comes back to 0, TURN ON the main power supply u_{dc}.
+18. After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
 19. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
-20. After 20 s, TURN OFF the main power supply u_{dc}.
+20. After 20 s, TURN OFF the main power supply $u_{dc}$.
 21. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
 22. TURN OFF all 6V External Auxiliary DC Power Supplies.
 
@@ -173,6 +174,7 @@ If you perform the stack test without CVB using circuit#1 at 50 Hz, you should e
 If you perform the stack test without CVB using circuit#2 at 50 Hz, you should expect an experimental result like this:
 
 <img width="945" height="432" alt="image" src="https://github.com/user-attachments/assets/7c1e23fc-bbc7-4777-a98d-10d1599f19c7" />
+
 
 
 
