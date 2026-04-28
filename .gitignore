@@ -1,7 +1,28 @@
-.pio
+# PlatformIO
+.pio/
+
+# VS Code generated settings
 .vscode/c_cpp_properties.json
 .vscode/extensions.json
 .vscode/launch.json
 .vscode/settings.json
-old
+
+# Simulink / MATLAB generated files
+slprj/
+*.slxc
+*_ert_rtw/
+*_grt_rtw/
+*_slrt_rtw/
+*_sharedutils/
+codegen/
+html/
+work/
+mex/
+*.mex*
+*.asv
+*.m~
+*.autosave
+
+# Project local outputs
+old/
 src/Data_records/*
