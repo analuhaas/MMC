@@ -56,40 +56,28 @@ First, we need to load the Single module test code from the OwnTech example repo
 
 ## Modules hardware setup
 
-Repeat for the 5 modules boards:
-
-5.	Recommended for MMC use: Configure all 5 modules boards to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
-
-- Connect an External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. Make sure this power supply OUTPUT IS OFF.
-
-<img width="484" height="398" alt="image" src="https://github.com/user-attachments/assets/f5caa6e6-ef7e-4f1a-aa60-1a68abdd268f" />
-
-- Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
-
-<img width="905" height="407" alt="image" src="https://github.com/user-attachments/assets/44efddcc-3fd9-4731-bdc4-a89d235879e1" />
-
-6.	If not done yet: Test the module using the low-frequency and high-frequency sequences as explained in Individual MMC module test.
+Implement for all the 5 modules boards the hardware modifications in the [TWIST modifications for MMC tutorial](twist_modifications_MMC_tutorial.md), if not done yet.
 
 ## Stack Hardware setup
 
-7.	Connect the boards in series using VLOW1 and GND terminals to form an MMC stack using banana cables (figure below).
-8.	Connect to each module an External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current above 0.5 A. Make sure these power supplies OUTPUT IS OFF (figure below).
-9.	Connect the boards using ethernet cables as in the image (figure below).
-10.	Connect the stack to the main DC power supply, R and Rdec resistances and diode (figure below).
+5.	Connect the boards in series using VLOW1 and GND terminals to form an MMC stack using banana cables (figure below).
+6.	Connect the External Auxiliary DC Power Supply to each module TWIST board via the white 6 V and DGND PINs. Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current above 2 A. Make sure these power supplies OUTPUT IS OFF (figure below).
+7.	Connect the boards using ethernet cables as in the image (figure below).
+8.	Connect the stack to the main DC power supply, R and Rdec resistances and diode (figure below).
 
 !!! If using circuit#1, remove Rdec from the circuit. If using circuit #2, circuit exactly as in the image.
 
-<img width="804" height="700" alt="image" src="https://github.com/user-attachments/assets/ae3bf984-800b-426d-9439-370ea5f45de4" />
+![Stack experimental configuration - circuit #2](figures\MMC_arm_test_experimental_electrical_circuit2.png).
 
-11.	Connect the voltage and current measurements with the oscilloscope (figure below). 
+9.	Connect the voltage and current measurements with the oscilloscope (figure below). 
 
-<img width="945" height="1202" alt="image" src="https://github.com/user-attachments/assets/2417675d-3c91-4788-a488-e856fa2a799a" />
+![Stack experimental configuration with oscilloscope - circuit #2](figures\MMC_arm_test_experimental_electrical_circuit2_oscillo.png).
 
 After making the connections and connecting the PC to the central controller board with the USB-C cable, you should have something like this:
 
 <img width="2244" height="1684" alt="stack_test_hardware_ready" src="https://github.com/user-attachments/assets/63024a10-321a-41fe-8a15-76b63a56be7d" />
 
-12.	Configure your Oscilloscope with PicoScope (tutorial using PicoScope 4444)
+10.	Configure your Oscilloscope with PicoScope (tutorial using PicoScope 4444)
 
 a.	Make sure it acquires the following measurements:
 
@@ -109,15 +97,15 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
 
 ## Executing the tutorial Stack test
 
-13.	Get the correct test code using “MMC arm – no CVB”  button.
-14.	Optional: Change the test parameters to have a more specific test:
+11.	Get the correct test code using “MMC arm – no CVB”  button.
+12.	Optional: Change the test parameters to have a more specific test:
 
   a.	In code: NLM frequency, number of modules.
 
   b.	In circuit: Number of modules, resistance values (to reduce or increase current), DC supply voltage.
   
   
-15.	Repeat to all 5 module boards M1, M2, M3, M4, M5:
+13.	Repeat to all 5 module boards M1, M2, M3, M4, M5:
   
   a.	Connect the board to the PC via a USB-C cable.
   
@@ -157,13 +145,14 @@ c.	Configure it to trigger when the stack voltage rises up to 2 V.
   d.	Do again: Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the board.
 
 
-16. Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the Central Controller board.
-17. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
-18. After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
-19. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
-20. After 20 s, TURN OFF the main power supply $u_{dc}$.
-21. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
-22. TURN OFF all 6V External Auxiliary DC Power Supplies.
+14. Build <img width="25" height="27" alt="image" src="https://github.com/user-attachments/assets/028ecb2b-5d25-4383-8ece-c51cb804c64f" /> and Upload <img width="34" height="25" alt="image" src="https://github.com/user-attachments/assets/5af20606-e19c-46fd-870b-326c0d855a70" /> the code main.cpp into the Central Controller board.
+15. Make sure all modules External Auxiliary DC Power Supply are configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supplies output.
+16. After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
+17. After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with or without CVB).
+18. Tap "a" and then "r" to record the scope monitored measurements.
+19. After acquiring your oscilloscope measurements, TURN OFF the main power supply $u_{dc}$.
+20. Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
+21. TURN OFF all 6V External Auxiliary DC Power Supplies.
 
 ## Expected results
 

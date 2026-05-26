@@ -50,33 +50,9 @@ To test the modules, use the module [low-frequency test tutorial](module_LF_test
 ### Subtask 1.3 - Build and test stacks
 #### Objective: Verify if stacks are working individually.
 
-Repeat for the upper and lower stacks:
+Repeat for the upper and lower stacks the [stack test tutorial](stack_openloop_CVB_test_tutorial.md). Be sure to verify if the current and voltage measurements of the modules are calibrated.
 
-5.	Connect the modules boards in series using VLOW1 and GND terminals to form an MMC stack using banana cables (figure below).
-6.	Connect each module to the External Auxiliary DC Power Supply to the TWIST via the 6 V and DGND white PINs (figure below). Make sure that the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current of 2 A. Make sure the power supply OUTPUT IS OFF.
-7.	Connect the boards using ethernet cables as in the image (figure below).
-8.	Connect the stack to the main DC power supply, R and Rdec resistances and diode (figure below).
-
-<img width="804" height="700" alt="image" src="https://github.com/user-attachments/assets/267497c6-c74f-442c-b332-5ae715eeec2e" />
-
-9.	Connect the voltage and current measurements with the oscilloscope.
-10.	Configure your Oscilloscope (PicoScope or other).
-11.	Test the stack using the CVB code with circuit #1.
-    - Get the correct test code using “MMC arm – with CVB”  button.
-    - Repeat to all 5 module boards M1, M2, M3, M4, M5:
-      * Connect the board to the PC via a USB-C cable.
-      * Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the board.
-      * Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
-        <img width="515" height="245" alt="image" src="https://github.com/user-attachments/assets/19cb6637-ec63-4e6f-a469-4d22c07fd88f" />
-
-      * Do again: Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the board.
-    - Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the Central Controller board.
-    - Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
-    - After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
-    - After the modules are charged with stable voltages more and less at the same level, click “p” to start stack operation with NLM (with CVB).
-    - After 20 s, TURN OFF the main power supply $u_{dc}$.
-    - Click “i” to stop stack operation and put all boards in IDLE mode (blocked state).
-    - TURN OFF all 6V External Auxiliary DC Power Supplies.
+![Stack test configuration](figures\MMC_arm_test_configuration.png)
 
 ## Task 2: Phase test using phase circuit#1 (no current)
 
@@ -84,24 +60,24 @@ Repeat for the upper and lower stacks:
 
 The theorical and experimental implementation electrical circuits for circuit #1 are described in the figure below. The steps to achieve this configuration are:
 
-12.	Connect the upper and lower stacks in series using VLOW1 and GND terminals to form an MMC phase using banana cables (figure below).
-13.	Connect each module of the phase to the External Auxiliary DC Power Supply via the 6 V and DGND white PINs (figure below). Use one External Auxiliary DC Power Supply for each stack or connect the stacks 6 V in parallel. Make sure that the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current of 2 A. Make sure the power supply OUTPUT IS OFF.
-14. Add extra 1.1 mF capacitance in parallel to Vhigh and DGND terminals to increase module capacitor ($𝐶= C_{extra} + 𝐶_{𝐻𝑖𝑔ℎ} \approx 1300 \mu 𝐹$).
-14.	Connect the controller board and all modules by ethernet cables as in the image (figure below).
-15.	Connect the stack to the 2 DC power supplies using the 2 protection diodes.
+5.	Connect the upper and lower stacks in series using VLOW1 and GND terminals to form an MMC phase using banana cables (figure below).
+6.	Connect each module of the phase to the External Auxiliary DC Power Supply via the 6 V and DGND white PINs (figure below). Use one External Auxiliary DC Power Supply for each stack or connect the stacks 6 V in parallel. Make sure that the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current of 2 A. Make sure the power supply OUTPUT IS OFF.
+7. Add extra 1.1 mF capacitance in parallel to Vhigh and DGND terminals to increase module capacitor ($𝐶= C_{extra} + 𝐶_{𝐻𝑖𝑔ℎ} \approx 1300 \mu 𝐹$).
+8.	Connect the controller board and all modules by ethernet cables as in the image (figure below).
+9.	Connect the stack to the 2 DC power supplies using the 2 protection diodes.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit1_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/2141b051-88c0-4b76-a64e-02be3ce04db8" />
+![Phase test - circuit #1 configuration](figures\MMC_phase_test_circuit1.png)
 
-16. Configure the 2 DC power supplies to 24 V (sum up 48 V in the DC bus).
-17.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
+10. Configure the 2 DC power supplies to 24 V (sum up 48 V in the DC bus).
+11.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
     - Upper arm voltage
     - Lower arm voltage
     - Phase voltage
     - Upper arm current
     - Lower arm current
     - 1 Capacitor voltage
-18.	Configure your Oscilloscope (PicoScope or other).
-19.	Test the phase using the example code.
+12.	Configure your Oscilloscope (PicoScope or other).
+13.	Test the phase using the example code.
     - Get the correct test code using “MMC phase”  button.
     - Repeat to all 5 module boards M1, M2, M3, M4, M5:
       * Connect the board to the PC via a USB-C cable.
@@ -128,6 +104,7 @@ The theorical and experimental implementation electrical circuits for circuit #1
     - Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
     - After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
     - After the modules are charged with stable voltages more and less at the same level, click “p” to start phase operation with NLM (with CVB).
+    - Tap "a" and then "r" to record the scope monitored measurements.
     - Acquire your oscilloscope results.
     - TURN OFF the main power supply $u_{dc}$.
     - Click “i” to stop phase operation and put all modules in IDLE mode (blocked state).
@@ -148,11 +125,11 @@ Similar results are obtained for experimental results:
 
 The theorical and experimental implementation electrical circuits for circuit #2 are described in the figure below. The steps to achieve this configuration from circuit #1 are:
 
-20. Connect a variable resistor between the phase and DC Power Supplies middle points. We recommend to set it to a $𝑅=15 \Omega$ value.
+14. Connect a variable resistor between the phase and DC Power Supplies middle points. We recommend to set it to a $𝑅=15 \Omega$ value.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit2_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/33474dd4-71ba-4660-9fdf-43f3c3c99929" />
+![Phase test - circuit #2 configuration](figures\MMC_phase_test_circuit2.png)
 
-21.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
+15.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
     - Upper arm voltage
     - Lower arm voltage
     - Phase voltage
@@ -160,8 +137,8 @@ The theorical and experimental implementation electrical circuits for circuit #2
     - Upper arm current
     - Lower arm current
     - 1 Capacitor voltage
-22.	Configure your Oscilloscope (PicoScope or other).
-23.	Test the phase using the example code.
+16.	Configure your Oscilloscope (PicoScope or other).
+17.	Test the phase using the example code.
     - Use the same code as done for circuit #1.
     - Connect the USB-C cable to the Central Controller board.
     - Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
@@ -188,14 +165,14 @@ Similar results are obtained for experimental results:
 
 The theorical and experimental implementation electrical circuits for circuit #3 are described in the figure below. The steps to achieve this configuration from circuit #2 are:
 
-24. Substitute the 2 DC power supplies and diodes by 1 single DC power supply with 1 protection diode as shown in the figure. Configure the DC power supply to 48 V.
-25. Connect 2 DC bus capacitors in parallel to the DC power supply and the phase as shown in the figure (used $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$).
-26. Connect the DC bus capacitors middle point with the load resistance as shown in the figure.
+18. Substitute the 2 DC power supplies and diodes by 1 single DC power supply with 1 protection diode as shown in the figure. Configure the DC power supply to 48 V.
+19. Connect 2 DC bus capacitors in parallel to the DC power supply and the phase as shown in the figure (used $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$).
+20. Connect the DC bus capacitors middle point with the load resistance as shown in the figure.
 
-<img width="300" height="639" alt="MMC_phase_test_circuit3_theoric_electrical_circuit (1)" src="https://github.com/user-attachments/assets/f626162a-e4a0-4c2d-b192-12da25898ed0" />
+![Phase test - circuit #3 configuration](figures\MMC_phase_test_circuit3.png)
 
-27.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
-28.	Test the phase using the example code.
+21.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
+22.	Test the phase using the example code.
     - Use the same code as done for circuit #1 and #2.
     - Connect the USB-C cable to the Central Controller board.
     - Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
@@ -229,12 +206,12 @@ Similar results are obtained for experimental results:
 
 The theorical and experimental implementation electrical circuits for circuit #4 are described in the figure below. The steps to achieve this configuration from circuit #3 are:
 
-29. Add 2 arm inductors in series with the upper and lower arms as shown in the figure (used $L_{stack}=5 mH$).
+23. Add 2 arm inductors in series with the upper and lower arms as shown in the figure (used $L_{stack}=5 mH$).
 
-<img width="300" height="639" alt="MMC_phase_test_circuit4_theoric_electrical_circuit (2)" src="https://github.com/user-attachments/assets/b57a9449-8169-4c1b-b5f0-d65b16265987" />
+![Phase test - circuit #4 configuration](figures\MMC_phase_test_circuit4.png)
 
-30.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
-31.	Test the phase using the example code.
+24.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
+25.	Test the phase using the example code.
     - Use the same code as done for circuit #1 and #2.
     - Connect the USB-C cable to the Central Controller board.
     - Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
