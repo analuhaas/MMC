@@ -36,7 +36,7 @@ First, we need to load the base code from the stack test with CVB in the OwnTech
 4.	Now you have the good code to start in your VScode.
 
 ## Preliminary Task 1: If not done yet, go up to stack Hardware setup
-### Subtask 1.1 - Modify TWIST boards
+### Subtask 1.1 - Modify TWIST boards and verify their measurement calibration
 
 It is necessary to modify the TWIST boards used as modules.
 
@@ -50,7 +50,9 @@ This is prefered since the board feeder is not yet adapted to MMC charging phase
 
 2) Up to version 1.4.3 of the boards, it is necessary to substitute the green fuses of the 6 V supply by 0 Ohms resistances of 1210 size. If you don't have 0 Ohms resistances, you can use small jumpers instead.
 
+Add figures here!
 
+3) Calibrate the board sensors using the [calibration tutorial](twist_calibration_tutorial.md).
 
 ### Subtask 1.2 - Test all modules using both low-frequency and high-frequency test sequences
 #### Objective: Verify if all modules are working individually.
