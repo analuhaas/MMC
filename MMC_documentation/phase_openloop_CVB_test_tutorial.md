@@ -117,7 +117,16 @@ The theorical and experimental implementation electrical circuits for circuit #1
       * Connect the board to the PC via a USB-C cable.
       * If the module needs specific calibration value, insert this code snippet on setup_routine() after the "" line. Change the module ID according to its function on the phase.
       '''
-      
+        if(module_ID == MMC_SM4)
+            {
+                shield.sensors.setConversionParametersLinear(V_HIGH,0.0297809746442154,0.0816717736324648);
+                shield.sensors.setConversionParametersLinear(V1_LOW,0.0447118735275233,-85.4652963581883);
+                shield.sensors.setConversionParametersLinear(V2_LOW,0.044724349440928,-85.9790466977148);
+                shield.sensors.setConversionParametersLinear(I1_LOW,0.00572228696154378,-12.9647582710024);
+                shield.sensors.setConversionParametersLinear(I2_LOW,0.00573807392353278,-12.98795596087);
+                shield.sensors.setConversionParametersLinear(I_HIGH,0.00505978197917605,-9.74527087864709);
+
+            }
       '''
       * Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the board.
       * Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
