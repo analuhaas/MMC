@@ -1,8 +1,8 @@
-# MMC phase test in open-loop (Task 3 of 3rd CARROTS Hackathon - Grenoble)
+# MMC phase test in open-loop (First done in 3rd CARROTS Hackathon - Grenoble)
 
 ## Objectives and context
 
-The objective of this task if to build a MMC phase considering that we already have two MMC stacks of 5 modules (one from GeePs and one from LAAS).
+The objective of this task is to build a MMC phase considering that we already have two MMC stacks of 5 modules.
 
 <img width="350" height="569" alt="WP1Hackathon_objective" src="https://github.com/user-attachments/assets/2fd0f94b-d88b-4281-a67d-d3690338cbe5" />
 
@@ -22,7 +22,7 @@ The objective of this task if to build a MMC phase considering that we already h
 
 ## Required Software list
 - Git
-- Visual Studio Code with PlatformIO 
+- Visual Studio Code with PlatformIO (follow [VScode for OwnTech tutorial](Vscode_for_OwnTech_configuration.md).)
 
 ## Get base code from VScode
 
@@ -120,6 +120,8 @@ By performing simulation with [phase circuit#1 simulink](https://github.com/anal
 
 Similar results are obtained for experimental results:
 
+![Phase test experimental results - circuit #1](figures\exp_phase_circuit1_D095.png)
+
 ## Task 3: Phase test using phase circuit#2 (AC current)
 #### Task objective: Verify if a AC current proportional to AC voltage is generated.
 
@@ -159,6 +161,8 @@ By performing simulation with [phase circuit#2 simulink](https://github.com/anal
 <img width="6201" height="2835" alt="Circuit2_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/53187dc5-df82-44e4-b5dc-5c311b8cf09f" />
 
 Similar results are obtained for experimental results:
+
+![Phase test experimental results - circuit #2](figures\exp_phase_circuit2_D095.png)
 
 ## Task 4: Phase test using phase circuit#3  (Negative stack currents)
 #### Task objective: Verify if the stack currents achieves negative values.
@@ -200,13 +204,14 @@ We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=1
 
 Similar results are obtained for experimental results:
 
+![Phase test experimental results - circuit #3](figures\exp_phase_circuit3_D095.png)
 
 ## Task 5: Phase test using phase circuit#4 (Filtered AC current)
 #### Task objective: Verify if the stack currents are sinusoidal and if a AC sinusoidal current is generated.
 
 The theorical and experimental implementation electrical circuits for circuit #4 are described in the figure below. The steps to achieve this configuration from circuit #3 are:
 
-23. Add 2 arm inductors in series with the upper and lower arms as shown in the figure (used $L_{stack}=5 mH$).
+23. Add 2 arm inductors in series with the upper and lower arms as shown in the figure (used $L = 30 mH$).
 
 ![Phase test - circuit #4 configuration](figures\MMC_phase_test_circuit4.png)
 
@@ -240,6 +245,7 @@ We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=1
 
 Similar results are obtained for experimental results:
 
+![Phase test experimental results - circuit #4](figures\exp_phase_circuit4_D095.png)
   
 
 

@@ -1,6 +1,8 @@
-1) It is recommended for MMC use to configure the board to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board.
+# Recommended modifications in TWIST boards to use them as MMC modules
 
-This is prefered since the board feeder is not yet adapted to MMC charging phase. To do that:
+The recommended hardware modifications of TWIST boards of version 1.4.3 or lower to serve as an MMC module are listed in this document.
+
+1) It is recommended for MMC use to configure the board to feed the 6 V auxiliary input externally with feeder completely disconnected from the electrical circuit of the board. This is prefered since the board feeder is not yet adapted to MMC charging phase. To do that:
 
 - Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
 
@@ -18,6 +20,6 @@ This is prefered since the board feeder is not yet adapted to MMC charging phase
 
 ![Fuses substitution](figures\Module_adapt_6Vfuses.png)
 
-To test if the 0 Ohms resistances are well mounted, connect all boards 6 V inputs in series as shown in the figure below. Use a DC power supply configured for 6 V and current depending on the number of boards (1 board consumes ~0.3 on the 6 V input). TURN ON the DC power supply, you should see all boards LEDs light up.
+- To test if the 0 Ohms resistances are well mounted, connect all boards 6 V inputs in series as shown in the figure below. Use a DC power supply configured for 6 V and current depending on the number of boards (1 board consumes ~0.3 on the 6 V input). TURN ON the DC power supply, you should see all boards LEDs light up.
 
 ![Fuses substitution test](figures\Module_adapt_6Vfuses_test.png)
