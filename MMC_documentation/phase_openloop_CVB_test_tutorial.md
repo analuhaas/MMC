@@ -7,17 +7,18 @@ The objective of this task is to build a MMC phase considering that we already h
 ![Phase tutorial objective](figures/MMC_phase_tutorial_objective.png)
 
 ## Required Hardware list
-- 11 TWIST boards with SPIN (extra 5 if necessary?)
-- 2 DC power supplies of 6 V with minimum 2 A
-- 2 DC power supply of (48 V, 5 A)
-- 2 Protection diodes (at least 100 V)
-- 2 DC bus capacitors around 4500 µF
-- 2 stack inductances around 5 mH
+- 11 TWIST boards with SPIN
+- 2 DC power supply of 6 V with minimum 2 A
+- 2 DC power supply of 48 V with minimum 3 A
+- 2 Protection diodes (at least 200 V)
+- 2 DC bus capacitors around 4400 µF
+- 2 stack inductances around 30 mH
+- 10 extra capacitors for modules (used extra 1100 µF)
 - 1 variable resistor
 - 10 ethernet cables
 - PC 64-bits (windows or linux)
 - Oscilloscope (PicoScope used as default)
-- Current probes (10 A peak-to-peak, 10 kHz)
+- Current probes
 - Differential probes for voltage measurements
 
 ## Required Software list
