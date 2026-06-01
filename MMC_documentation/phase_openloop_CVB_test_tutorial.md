@@ -98,7 +98,22 @@ The theorical and experimental implementation electrical circuits for circuit #1
       
       * Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the board.
       * Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
-        ![ID_list](figures/ID_list.png)
+        ``` ruby
+        /* -------------- BOARD IDENTIFICATION ----------------------- */
+        /* --------------- To be changed by user --------------------- */
+
+        constexpr uint32_t UID_MMC_LEAD_BOARD = 0x002B002A;
+        constexpr uint32_t UID_MMC_SM1_BOARD = 0x0033004C;
+        constexpr uint32_t UID_MMC_SM2_BOARD = 0x0031001B;
+        constexpr uint32_t UID_MMC_SM3_BOARD = 0x00330049;
+        constexpr uint32_t UID_MMC_SM4_BOARD = 0x0033004B;
+        constexpr uint32_t UID_MMC_SM5_BOARD = 0x00330054;
+        constexpr uint32_t UID_MMC_SM6_BOARD = 0x0032003F;
+        constexpr uint32_t UID_MMC_SM7_BOARD = 0x004E0048;
+        constexpr uint32_t UID_MMC_SM8_BOARD = 0x00470026;
+        constexpr uint32_t UID_MMC_SM9_BOARD = 0x004C001D;
+        constexpr uint32_t UID_MMC_SM10_BOARD = 0x0047002B;
+        ```
 
       * Do again: Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the board.
     - Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the Central Controller board.
@@ -247,7 +262,7 @@ We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=1
 
 Similar results are obtained for experimental results:
 
-![Phase test experimental results - circuit #4](figures/exp_phase_circuit4_D095.png)
+![Phase test experimental results - circuit #4](figures/exp_phase_circuit4_D09.png)
   
 
 
