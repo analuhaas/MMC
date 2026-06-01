@@ -66,7 +66,7 @@ The theorical and experimental implementation electrical circuits for circuit #1
 8.	Connect the controller board and all modules by ethernet cables as in the image (figure below).
 9.	Connect the stack to the 2 DC power supplies using the 2 protection diodes.
 
-![Phase test - circuit #1 configuration](figures\MMC_phase_test_circuit1.png)
+![Phase test - circuit #1 configuration](figures/MMC_phase_test_circuit1.png)
 
 10. Configure the 2 DC power supplies to 24 V (sum up 48 V in the DC bus).
 11.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
@@ -131,7 +131,7 @@ The theorical and experimental implementation electrical circuits for circuit #2
 
 14. Connect a variable resistor between the phase and DC Power Supplies middle points. We recommend to set it to a $𝑅=15 \Omega$ value.
 
-![Phase test - circuit #2 configuration](figures\MMC_phase_test_circuit2.png)
+![Phase test - circuit #2 configuration](figures/MMC_phase_test_circuit2.png)
 
 15.	Connect the voltage and current measurements with the oscilloscope. Recommended measures:
     - Upper arm voltage
@@ -175,7 +175,7 @@ The theorical and experimental implementation electrical circuits for circuit #3
 19. Connect 2 DC bus capacitors in parallel to the DC power supply and the phase as shown in the figure (used $𝐶_{𝑏𝑢𝑠}=4400 \mu 𝐹$).
 20. Connect the DC bus capacitors middle point with the load resistance as shown in the figure.
 
-![Phase test - circuit #3 configuration](figures\MMC_phase_test_circuit3.png)
+![Phase test - circuit #3 configuration](figures/MMC_phase_test_circuit3.png)
 
 21.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
 22.	Test the phase using the example code.
@@ -215,7 +215,7 @@ The theorical and experimental implementation electrical circuits for circuit #4
 
 23. Add 2 arm inductors in series with the upper and lower arms as shown in the figure (used $L = 30 mH$).
 
-![Phase test - circuit #4 configuration](figures\MMC_phase_test_circuit4.png)
+![Phase test - circuit #4 configuration](figures/MMC_phase_test_circuit4.png)
 
 24.	Use same Measurements and Oscilloscope (PicoScope or other) configuration as for circuit #2.
 25.	Test the phase using the example code.
