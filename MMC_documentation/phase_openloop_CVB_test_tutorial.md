@@ -52,7 +52,7 @@ To test the modules, use the module [low-frequency test tutorial](module_LF_test
 
 Repeat for the upper and lower stacks the [stack test tutorial](stack_openloop_CVB_test_tutorial.md). Be sure to verify if the current and voltage measurements of the modules are calibrated.
 
-![Stack test configuration](figures\MMC_arm_test_configuration.png)
+![Stack test configuration](figures/MMC_arm_test_configuration.png)
 
 ## Task 2: Phase test using phase circuit#1 (no current)
 
