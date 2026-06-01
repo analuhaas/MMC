@@ -6,7 +6,7 @@ The recommended hardware modifications of TWIST boards of version 1.4.3 or lower
 
 - Open the jumper JP5001 of the board by cutting the jumper connections using a cutter with an appropriate camera to see the area
 
-<img width="788" height="354" alt="image" src="https://github.com/user-attachments/assets/4ea8605a-20df-4adf-a9dc-0c007057e639" />
+![Feeder jumper cut](figures\feeder_jumper_cut.png)
 
 2) Up to version 1.4.3 of the boards, it is necessary to substitute the black/green fuses of the 6 V supply by 0 Ohms resistances of 1210 size.
 

@@ -4,7 +4,7 @@
 
 The objective of this task is to build a MMC phase considering that we already have two MMC stacks of 5 modules.
 
-<img width="350" height="569" alt="WP1Hackathon_objective" src="https://github.com/user-attachments/assets/2fd0f94b-d88b-4281-a67d-d3690338cbe5" />
+![Phase tutorial objective](figures/MMC_phase_tutorial_objective.png)
 
 ## Required Hardware list
 - 11 TWIST boards with SPIN (extra 5 if necessary?)
@@ -29,9 +29,9 @@ The objective of this task is to build a MMC phase considering that we already h
 First, we need to load the base code from the stack test with CVB in the OwnTech example repository version in https://github.com/analuhaas/examples 
 1.	In VScode, open the folder where you previously cloned OwnTech’s github.
 2.	In platformio.ini file, substitute the owntech_examples variable link by https://github.com/analuhaas/examples.git 
-3.	Go to platform.io icon <img width="34" height="36" alt="image" src="https://github.com/user-attachments/assets/7e95c1b1-b0ee-473a-b434-a95adbce17a5" />, go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB” or “MMC phase”.
+3.	Go to platform.io icon ![ALIEN](figures/alien_icon.png), go to Examples Twist under the Project Tasks tab and click on “MMC arm – with CVB” or “MMC phase”.
 
-<img width="300" height="235" alt="image" src="https://github.com/user-attachments/assets/295e63d3-559a-4d32-9f65-5078789b8511" />
+![Examples buttons](figures/examples_buttons.png)
 
 4.	Now you have the good code to start in your VScode.
 
@@ -82,6 +82,7 @@ The theorical and experimental implementation electrical circuits for circuit #1
     - Repeat to all 5 module boards M1, M2, M3, M4, M5:
       * Connect the board to the PC via a USB-C cable.
       * If the module needs specific calibration value, insert this code snippet on setup_routine() after the "" line. Change the module ID according to its function on the phase.
+
       '''
         if(module_ID == MMC_SM4)
             {
@@ -94,12 +95,13 @@ The theorical and experimental implementation electrical circuits for circuit #1
 
             }
       '''
-      * Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the board.
+      
+      * Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the board.
       * Open the serial monitor and copy the board ID to the identification list in the code according to its function in the stack
-        <img width="515" height="245" alt="image" src="https://github.com/user-attachments/assets/19cb6637-ec63-4e6f-a469-4d22c07fd88f" />
+        ![ID_list](figures/ID_list.png)
 
-      * Do again: Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the board.
-    - Build <img width="26" height="26" alt="image" src="https://github.com/user-attachments/assets/4b1113ad-539e-43b8-b027-26ed47c0ba9f" /> and Upload <img width="40" height="31" alt="image" src="https://github.com/user-attachments/assets/2d3610c6-f896-49e7-bcda-5db36a032896" /> the code main.cpp into the Central Controller board.
+      * Do again: Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the board.
+    - Build ![BUILD](figures/build.png) and Upload ![UPLOAD](figures/upload.png) the code main.cpp into the Central Controller board.
     - Let the USB-C cable connected to the Central Controller board during the test.
     - Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current at max 2 A. TURN ON the External Auxiliary DC Power Supplies output.
     - After the capacitor voltages comes back to 0, TURN ON the main power supply $u_{dc}$.
@@ -116,7 +118,7 @@ By performing simulation with [phase circuit#1 simulink](https://github.com/anal
 - There is only current for charging capacitors. Less than 1 A on the stack ($𝑖_{𝑢,𝑝}$ and $𝑖_{𝑙,𝑝}$)
 - Open circuit = No AC phase current
 
-<img width="1275" height="583" alt="image" src="https://github.com/user-attachments/assets/69d8366c-bdd3-4642-b6b2-55a1436de936" />
+![Phase test simulation results - circuit #1](figures/sim_circuit1.png)
 
 Similar results are obtained for experimental results:
 
@@ -158,7 +160,7 @@ By performing simulation with [phase circuit#2 simulink](https://github.com/anal
 - AC phase current has same format as AC voltage (resistance load)
 - Only positive currents on the stacks due to protection diodes
 
-<img width="6201" height="2835" alt="Circuit2_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/53187dc5-df82-44e4-b5dc-5c311b8cf09f" />
+![Phase test simulation results - circuit #2](figures/sim_circuit2.png)
 
 Similar results are obtained for experimental results:
 
@@ -194,13 +196,13 @@ By performing simulation with [phase circuit#3 simulink](https://github.com/anal
 - Harmonics also present on $i_Sigma$ current
 - Improved voltage and current outputs
   
-<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/f16e4df0-a792-4d23-ab61-bb77071de245" />
+![Phase test simulation results - circuit #3 with small C](figures/sim_circuit3_C_small.png)
 
-We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
+We simulated incrementing the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1308,4 \mu 𝐹$ and obtained these results:
 - Increasing C reduced oscillations but  stack current still have switching harmonics
 - Switching Harmonics still present on $i_Sigma$ current but reduced
   
-<img width="6201" height="2835" alt="Circuit3_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/34e626a9-edac-4f8f-ab22-068dea0f6d8e" />
+![Phase test simulation results - circuit #3 with big C](figures/sim_circuit3_C_big.png)
 
 Similar results are obtained for experimental results:
 
@@ -234,14 +236,14 @@ By performing simulation with [phase circuit#4 simulink](https://github.com/anal
 - Phase voltage and current almost sinusoidal
 - 2 omega Harmonics present on $i_Sigma$ current
   
-<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh188muF_isigma" src="https://github.com/user-attachments/assets/07366fb0-2299-40c9-8cf9-282450400a25" />
+![Phase test simulation results - circuit #4 with small C](figures/sim_circuit4_C_small.png)
 
 We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=188,4 \mu 𝐹$ to $𝐶=1868,4 \mu 𝐹$ and obtained these results:
 - Smooth current and stepped voltage on stack due to slower capacitor charge/discharge
 - Phase voltage and current sinusoidal
 - Almost null 2 omega Harmonics on $i_Sigma$ current
   
-<img width="6201" height="2835" alt="Circuit4_f50Hz_duty095_Chigh1800muF_isigma" src="https://github.com/user-attachments/assets/74d6f3a2-f7de-4874-a943-10e6035690c2" />
+![Phase test simulation results - circuit #4 with big C](figures/sim_circuit4_C_big.png)
 
 Similar results are obtained for experimental results:
 
