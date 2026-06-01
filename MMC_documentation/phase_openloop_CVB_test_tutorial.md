@@ -122,7 +122,7 @@ By performing simulation with [phase circuit#1 simulink](https://github.com/anal
 
 Similar results are obtained for experimental results:
 
-![Phase test experimental results - circuit #1](figures\exp_phase_circuit1_D095.png)
+![Phase test experimental results - circuit #1](figures/exp_phase_circuit1_D095.png)
 
 ## Task 3: Phase test using phase circuit#2 (AC current)
 #### Task objective: Verify if a AC current proportional to AC voltage is generated.
@@ -164,7 +164,7 @@ By performing simulation with [phase circuit#2 simulink](https://github.com/anal
 
 Similar results are obtained for experimental results:
 
-![Phase test experimental results - circuit #2](figures\exp_phase_circuit2_D095.png)
+![Phase test experimental results - circuit #2](figures/exp_phase_circuit2_D095.png)
 
 ## Task 4: Phase test using phase circuit#3  (Negative stack currents)
 #### Task objective: Verify if the stack currents achieves negative values.
@@ -206,7 +206,7 @@ We simulated incrementing the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔�
 
 Similar results are obtained for experimental results:
 
-![Phase test experimental results - circuit #3](figures\exp_phase_circuit3_D095.png)
+![Phase test experimental results - circuit #3](figures/exp_phase_circuit3_D095.png)
 
 ## Task 5: Phase test using phase circuit#4 (Filtered AC current)
 #### Task objective: Verify if the stack currents are sinusoidal and if a AC sinusoidal current is generated.
@@ -247,7 +247,7 @@ We tried to increment the module capacitance from $𝐶=𝐶_{𝐻𝑖𝑔ℎ}=1
 
 Similar results are obtained for experimental results:
 
-![Phase test experimental results - circuit #4](figures\exp_phase_circuit4_D095.png)
+![Phase test experimental results - circuit #4](figures/exp_phase_circuit4_D095.png)
   
 
 
