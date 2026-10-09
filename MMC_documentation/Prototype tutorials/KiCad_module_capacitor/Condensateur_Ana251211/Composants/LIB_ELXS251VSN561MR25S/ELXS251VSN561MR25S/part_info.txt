@@ -1,0 +1,9 @@
+Manufacturer=Chemi-Con
+PartNumber=ELXS251VSN561MR25S
+PartCategory=Capacitor Polarised
+PackageCategory=Capacitor, Polarized Radial Diameter
+PinCount=2
+Version=1.1
+Released=2021-07-03 08:32:26
+Downloaded=2025-12-10 21:44:01
+3D=Y

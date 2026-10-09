@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "ELXS251VSN561MR25S"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2021-07-03-08:32:26)
+    (mountForm default
+        (footprintRef "CAPPRD1000W180D3050H2750")
+        (spec "System")
+    )
+)

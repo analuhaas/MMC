@@ -1,0 +1,16 @@
+.ELXS251VSN561MR25S :1 ;Nippon Chemi-Con 560uF 250 V dc Aluminium Electrolytic Capacitor, LXS Series 5000h 30 (Dia.) x 25mm
+CAPPRD1000W180D3050H2750
+*STM C
+*NGS
+*PLB 1="+" 2="-"
+*MXP 2
+*DFN ELXS251VSN561MR25S
+~!Mouser Part Number (661-ELXS251VSN561MR2)
+~!Link Mouser Price/Stock (https://www.mouser.com/Search/Refine.aspx?Keyword=661-ELXS251VSN561MR2)
+~!Manufacturer_Name (Chemi-Con)
+~!Manufacturer_Part_Number (ELXS251VSN561MR25S)
+~!Link Datasheet (http://www.mouser.com/datasheet/2/420/al-lxslug-e-140701-515431.pdf)
+~!Height (27.5mm)
+~!3D_Model (ELXS251VSN561MR25S)
+ELXS251VSN561MR25S
+1.1!U 2.1!U 
