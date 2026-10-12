@@ -2,7 +2,7 @@
 
 ## Objectives and context
 
-The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy with CVB. For that, we use the circuit structure below. $R_{dec}$ resistance is connected in parallel to the stack in order to emulate negative currents discharging the modules capacitor.
+The goal of this tutorial is to test a MMC stack built with TWIST boards operation with open-loop control using NLM modulation strategy with CVB. For that, we use the circuit structure below. $R_{p}$ resistance is connected in parallel to the stack in order to emulate negative currents discharging the modules capacitor.
 <img src="figures/MMC_arm_test_theoric_electrical_5modules_tutorial.png" alt="MMC stack test circuit" width="300"/>
 
 As in the individual module test, the boards serves as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND).
@@ -64,7 +64,9 @@ Repeat for the stack modules boards, if not done yet:
 
 4.	Recommended for a typical MMC behavior: Configure all 5 modules boards with the minor hardware modifications indicated in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_modifications_MMC_tutorial.md).
 
-5.  Calibrate the module sensors as explained in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_calibration_tutorial.md).
+5.  Calibrate the module sensors. You can do it in two ways:
+    - manually, reading the measurements on the serial monitor and computing the gains and offsets in a spreadsheet, as explained in the [manual calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_tutorial.md);
+    - automatically, with MATLAB and a PicoScope acquiring the measurements and computing the gains and offsets, as explained in the [automated calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_automated_tutorial.md).
 
 6.	Test the module using the low-frequency and high-frequency sequences as explained in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/module_test_sequences_tutorial.md).
 
@@ -73,7 +75,7 @@ Repeat for the stack modules boards, if not done yet:
 7.	Connect the boards in series using VLOW1 and GND terminals to form an MMC stack using banana cables.
 8.	Connect to each module an External Auxiliary DC Power Supply to the TWIST via the 6 V and 6VGND PINs. Make sure the External Auxiliary DC Power Supplies are configured to deliver 6 V with limiting current above 0.5 A. Make sure these power supplies OUTPUT IS OFF.
 9.	Connect the boards using ethernet cables between all modules and supervisor stack.
-10.	Connect the stack to the main DC power supply, R and Rdec resistances and diode.
+10.	Connect the stack to the main DC power supply, $R_s$ and $R_p$_ resistances and diode.
 
 <img src="figures/MMC_arm_test_experimental_electrical_circuit2_without_oscillocope.drawio.png" alt="Stack Hardware setup" width="800"/>
 
@@ -81,7 +83,7 @@ Repeat for the stack modules boards, if not done yet:
 
 After making the connections and connecting the PC to the central controller board with the USB-C cable, you should have a physical implementation like this:
 
-<img src="figures/MMC_arm_test_setup.png" alt="Implementation example" width="600"/>
+<img src="figures/MMC_arm_test_setup.png" alt="Implementation example" width="500"/>
 
 12.	Configure your Oscilloscope. Recommended configurations are:
 - 10 ms/div configuration with sampling interval around 1 µs (x5 smaller than critical task period)
@@ -104,7 +106,7 @@ After making the connections and connecting the PC to the central controller boa
   b.  If the module needs specific calibration value, insert this code snippet on setup_routine(). Change the module ID and the gain and offset to correspond to the good module and calibration.
 
         ``` ruby
-        if(module_ID == MMC_SMx)
+        if(module_ID == MMC_Mx)
             {
                 shield.sensors.setConversionParametersLinear(V_HIGH,gain,offset);
                 shield.sensors.setConversionParametersLinear(V1_LOW,gain,offset);
@@ -127,25 +129,25 @@ After making the connections and connecting the PC to the central controller boa
   
   constexpr uint32_t UID_MMC_LEAD_BOARD = 0x002B002A;
   
-  constexpr uint32_t UID_MMC_SM1_BOARD = 0x00330054;
+  constexpr uint32_t UID_MMC_M1_BOARD = 0x00330054;
   
-  constexpr uint32_t UID_MMC_SM2_BOARD = 0x0033004B;
+  constexpr uint32_t UID_MMC_M2_BOARD = 0x0033004B;
   
-  constexpr uint32_t UID_MMC_SM3_BOARD = 0x00330049;
+  constexpr uint32_t UID_MMC_M3_BOARD = 0x00330049;
   
-  constexpr uint32_t UID_MMC_SM4_BOARD = 0x0033004C;
+  constexpr uint32_t UID_MMC_M4_BOARD = 0x0033004C;
   
-  constexpr uint32_t UID_MMC_SM5_BOARD = 0x0031001B;
+  constexpr uint32_t UID_MMC_M5_BOARD = 0x0031001B;
   
-  constexpr uint32_t UID_MMC_SM6_BOARD = 0x11118888;
+  constexpr uint32_t UID_MMC_M6_BOARD = 0x11118888;
   
-  constexpr uint32_t UID_MMC_SM7_BOARD = 0x11119999;
+  constexpr uint32_t UID_MMC_M7_BOARD = 0x11119999;
   
-  constexpr uint32_t UID_MMC_SM8_BOARD = 0x1111AAA0;
+  constexpr uint32_t UID_MMC_M8_BOARD = 0x1111AAA0;
   
-  constexpr uint32_t UID_MMC_SM9_BOARD = 0x1111BBB1;
+  constexpr uint32_t UID_MMC_M9_BOARD = 0x1111BBB1;
   
-  constexpr uint32_t UID_MMC_SM10_BOARD = 0x1111CCC2;
+  constexpr uint32_t UID_MMC_M10_BOARD = 0x1111CCC2;
 ```
 
 
@@ -167,7 +169,7 @@ After making the connections and connecting the PC to the central controller boa
 
 ## Plotting data from supervisor scope
 
-26. Treat the resulting csv data from supervisor scope to obtain the capacitors voltage using the [tutorial](../../Other/scopemimicry_capacitor_voltage_data/How_to_get_vcap_scopemimicry.md). Any change in the scope variables will need code adaptation.
+26. Treat the resulting csv data from supervisor scope to obtain the capacitors voltage using the [tutorial](../../Other/scopemimicry_plot/README.md). Any change in the scope variables will need code adaptation.
 
 ## Expected results
 

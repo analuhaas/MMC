@@ -18,7 +18,7 @@
  */
 
 /**
- * @brief  This example deploys the open-loop control of a MMC arm integrating a Capacitor Voltage Balancing algorithm with modified connected state duty cycle of 0.9 instead of 1. 
+ * @brief  This example deploys the open-loop control of a MMC stack using Nearest Level Modulation (NLM) and a Capacitor Voltage Balancing (CVB) algorithm.
  *         This research was funded in whole by the French National Research Agency (ANR) under the project CARROTS "ANR-24-CE05-0920-01".
  *
  * @author Ayoub Farah Hassan <ayoub.farah-hassan@laas.fr>
@@ -39,8 +39,6 @@
 /*--------------OWNTECH Libraries----------------------------- */
 #include "filters.h"
 #include "trigo.h"
-#include "pid.h"
-#include "pr.h"
 #include "arm_math_types.h"
 #include <ScopeMimicry.h>
 
@@ -49,16 +47,16 @@
 
 
 #define MMC_LEAD 0
-#define MMC_SM1 1
-#define MMC_SM2 2
-#define MMC_SM3 3
-#define MMC_SM4 4
-#define MMC_SM5 5
-#define MMC_SM6 6
-#define MMC_SM7 7
-#define MMC_SM8 8
-#define MMC_SM9 9
-#define MMC_SM10 10
+#define MMC_M1 1
+#define MMC_M2 2
+#define MMC_M3 3
+#define MMC_M4 4
+#define MMC_M5 5
+#define MMC_M6 6
+#define MMC_M7 7
+#define MMC_M8 8
+#define MMC_M9 9
+#define MMC_M10 10
 
 #define IDLE 0
 #define POWER 1
@@ -67,9 +65,9 @@
 #define UNDER_VOLTAGE 4
 #define OVER_CURRENT 5
 
-constexpr uint8_t MMC_SM_COUNT = 10;
-constexpr uint8_t MMC_SM_FIRST = MMC_SM1;
-constexpr uint8_t MMC_SM_LAST = MMC_SM10;
+constexpr uint8_t MMC_M_COUNT = 10;
+constexpr uint8_t MMC_M_FIRST = MMC_M1;
+constexpr uint8_t MMC_M_LAST = MMC_M10;
 
 /* -------------- GENERAL MMC DEFINITIONS -------------------- */
 /* --------------- To be changed by user --------------------- */
@@ -85,16 +83,16 @@ constexpr float32_t overcurrent_tolerance = 8.0F; //[A] Set overcurrent toleranc
 /* --------------- To be changed by user --------------------- */
 
 constexpr uint32_t UID_MMC_LEAD_BOARD = 0x002B002A;
-constexpr uint32_t UID_MMC_SM1_BOARD = 0x00330054;
-constexpr uint32_t UID_MMC_SM2_BOARD = 0x0033004B;
-constexpr uint32_t UID_MMC_SM3_BOARD = 0x00330049;
-constexpr uint32_t UID_MMC_SM4_BOARD = 0x0033004C;
-constexpr uint32_t UID_MMC_SM5_BOARD = 0x0031001B;
-constexpr uint32_t UID_MMC_SM6_BOARD = 0x11118888;
-constexpr uint32_t UID_MMC_SM7_BOARD = 0x11119999;
-constexpr uint32_t UID_MMC_SM8_BOARD = 0x1111AAA0;
-constexpr uint32_t UID_MMC_SM9_BOARD = 0x1111BBB1;
-constexpr uint32_t UID_MMC_SM10_BOARD = 0x1111CCC2;
+constexpr uint32_t UID_MMC_M1_BOARD = 0x0033004C;
+constexpr uint32_t UID_MMC_M2_BOARD = 0x0031001B;
+constexpr uint32_t UID_MMC_M3_BOARD = 0x00330049;
+constexpr uint32_t UID_MMC_M4_BOARD = 0x0033004B;
+constexpr uint32_t UID_MMC_M5_BOARD = 0x00330054;
+constexpr uint32_t UID_MMC_M6_BOARD = 0x0032003F;
+constexpr uint32_t UID_MMC_M7_BOARD = 0x004E0048;
+constexpr uint32_t UID_MMC_M8_BOARD = 0x00470026;
+constexpr uint32_t UID_MMC_M9_BOARD = 0x004C001D;
+constexpr uint32_t UID_MMC_M10_BOARD = 0x0047002B;
 
 /* --------- BOARD IDENTIFICATION functions ------------------ */
 static uint32_t read_board_uid()
@@ -110,28 +108,28 @@ static uint8_t detect_module_id()
     {
     case UID_MMC_LEAD_BOARD:
         return MMC_LEAD;
-    case UID_MMC_SM1_BOARD:
-        return MMC_SM1;
-    case UID_MMC_SM2_BOARD:
-        return MMC_SM2;
-    case UID_MMC_SM3_BOARD:
-        return MMC_SM3;
-    case UID_MMC_SM4_BOARD:
-        return MMC_SM4;
-    case UID_MMC_SM5_BOARD:
-        return MMC_SM5;
-    case UID_MMC_SM6_BOARD:
-        return MMC_SM6;
-    case UID_MMC_SM7_BOARD:
-        return MMC_SM7;
-    case UID_MMC_SM8_BOARD:
-        return MMC_SM8;
-    case UID_MMC_SM9_BOARD:
-        return MMC_SM9;
-    case UID_MMC_SM10_BOARD:
-        return MMC_SM10;
+    case UID_MMC_M1_BOARD:
+        return MMC_M1;
+    case UID_MMC_M2_BOARD:
+        return MMC_M2;
+    case UID_MMC_M3_BOARD:
+        return MMC_M3;
+    case UID_MMC_M4_BOARD:
+        return MMC_M4;
+    case UID_MMC_M5_BOARD:
+        return MMC_M5;
+    case UID_MMC_M6_BOARD:
+        return MMC_M6;
+    case UID_MMC_M7_BOARD:
+        return MMC_M7;
+    case UID_MMC_M8_BOARD:
+        return MMC_M8;
+    case UID_MMC_M9_BOARD:
+        return MMC_M9;
+    case UID_MMC_M10_BOARD:
+        return MMC_M10;
     default:
-        return MMC_SM1;
+        return MMC_M1;
     }
 }
 
@@ -224,14 +222,14 @@ void loop_communication_task();
 /* --------------USER VARIABLES DECLARATIONS------------------- */
 
 /* Auto-detected module ID (uses dummy UIDs for now). */
-uint8_t module_ID = detect_module_id(); // The ID of the module, can be set to MMC_LEAD or any other SMx
+uint8_t module_ID = detect_module_id(); // The ID of the module, can be set to MMC_LEAD or any other Mx
 
 static uint8_t module_comand; // The command the followers needs to apply
 static uint8_t module_command_past; // The command the followers applied in t-1 (last critical task)
 static bool change_state_command = false; // Flag to change the state of the command
 static bool send_idle = false;            // Flag to send idle command from master to followers
 
-constexpr uint8_t MMC_STATUS_CODE_BITS = 3; 
+constexpr uint8_t MMC_STATUS_CODE_BITS = 3;
 constexpr uint32_t MMC_STATUS_CODE_MASK = (1UL << MMC_STATUS_CODE_BITS) - 1U;
 constexpr uint32_t MMC_STATUS_UPPER_ARM_MASK = (1UL << MMC_STATUS_CODE_BITS);
 
@@ -239,11 +237,11 @@ constexpr uint32_t MMC_STATUS_UPPER_ARM_MASK = (1UL << MMC_STATUS_CODE_BITS);
  * @brief Frame exchanged over the RS485 communication bus.
  *
  * Structure overview:
- * - `sm_insertion`: bit-packed insertion flags for each submodule.
+ * - `module_insertion`: bit-packed insertion flags for each module.
  * - `capacitor_voltage_raw`: 12-bit encoded capacitor voltage.
  * - `arm_current_raw`: 12-bit encoded arm current.
  * - `status`: 3-bit global status level plus the arm selection flag.
- * - `sm_id`: identifier of the sender (lead or submodule index).
+ * - `sender_id`: identifier of the sender (lead or module index).
  */
 struct MMC_frame
 {
@@ -252,18 +250,18 @@ struct MMC_frame
         uint16_t raw;
         struct
         {
-            uint16_t sm1_inserted : 1;
-            uint16_t sm2_inserted : 1;
-            uint16_t sm3_inserted : 1;
-            uint16_t sm4_inserted : 1;
-            uint16_t sm5_inserted : 1;
-            uint16_t sm6_inserted : 1;
-            uint16_t sm7_inserted : 1;
-            uint16_t sm8_inserted : 1;
-            uint16_t sm9_inserted : 1;
-            uint16_t sm10_inserted : 1;
+            uint16_t m1_inserted : 1;
+            uint16_t m2_inserted : 1;
+            uint16_t m3_inserted : 1;
+            uint16_t m4_inserted : 1;
+            uint16_t m5_inserted : 1;
+            uint16_t m6_inserted : 1;
+            uint16_t m7_inserted : 1;
+            uint16_t m8_inserted : 1;
+            uint16_t m9_inserted : 1;
+            uint16_t m10_inserted : 1;
         } bits;
-    } sm_insertion;
+    } module_insertion;
     uint16_t capacitor_voltage_raw : 12;
     uint16_t arm_current_raw : 12;
     union
@@ -275,7 +273,7 @@ struct MMC_frame
             uint8_t upper_arm_frame : 1;
         } bits;
     } status;
-    uint8_t sm_id;
+    uint8_t sender_id;
 } __packed;
 
 typedef MMC_frame MMC_frame_t;
@@ -325,68 +323,68 @@ static inline uint16_t mmc_frame_get_current_raw(const MMC_frame_t &frame)
 }
 
 /**
- * @brief Set the submodule identifier associated with an MMC frame.
+ * @brief Set the module identifier associated with an MMC frame.
  *
  * @param frame Frame to update.
- * @param id Identifier of the sender (lead or submodule).
+ * @param id Identifier of the sender (lead or module).
  */
-static inline void mmc_frame_set_sm_identifier(MMC_frame_t &frame, uint8_t id)
+static inline void mmc_frame_set_module_identifier(MMC_frame_t &frame, uint8_t id)
 {
-    frame.sm_id = id;
+    frame.sender_id = id;
 }
 
 /**
- * @brief Read the submodule identifier stored inside an MMC frame.
+ * @brief Read the module identifier stored inside an MMC frame.
  *
  * @param frame Frame to inspect.
  * @return Sender identifier extracted from the frame.
  */
-static inline uint8_t mmc_frame_get_sm_identifier(const MMC_frame_t &frame)
+static inline uint8_t mmc_frame_get_module_identifier(const MMC_frame_t &frame)
 {
-    return frame.sm_id;
+    return frame.sender_id;
 }
 
 /**
- * @brief Update the insertion flag for a given submodule in an MMC frame.
+ * @brief Update the insertion flag for a given module in an MMC frame.
  *
  * @param frame Frame to modify.
- * @param sm_index Submodule identifier to update.
- * @param inserted Set to true if the submodule is inserted.
+ * @param module_index Module identifier to update.
+ * @param inserted Set to true if the module is inserted.
  */
-static inline void mmc_frame_set_sm_inserted(MMC_frame_t &frame, uint8_t sm_index, bool inserted)
+static inline void mmc_frame_set_module_inserted(MMC_frame_t &frame, uint8_t module_index, bool inserted)
 {
-    if (sm_index < MMC_SM_FIRST || sm_index > MMC_SM_LAST)
+    if (module_index < MMC_M_FIRST || module_index > MMC_M_LAST)
     {
         return;
     }
-    uint8_t shift = static_cast<uint8_t>(sm_index - MMC_SM_FIRST);
+    uint8_t shift = static_cast<uint8_t>(module_index - MMC_M_FIRST);
     uint16_t mask = static_cast<uint16_t>(1U << shift);
     if (inserted)
     {
-        frame.sm_insertion.raw |= mask;
+        frame.module_insertion.raw |= mask;
     }
     else
     {
-        frame.sm_insertion.raw &= static_cast<uint16_t>(~mask);
+        frame.module_insertion.raw &= static_cast<uint16_t>(~mask);
     }
 }
 
 /**
- * @brief Check whether a submodule is marked as inserted in an MMC frame.
+ * @brief Check whether a module is marked as inserted in an MMC frame.
  *
  * @param frame Frame to inspect.
- * @param sm_index Submodule identifier to check.
+ * @param module_index Module identifier to check.
  * @return True when the insertion flag is set, false otherwise.
  */
-static inline bool mmc_frame_get_sm_inserted(const MMC_frame_t &frame, uint8_t sm_index)
+static inline bool mmc_frame_get_module_inserted(const MMC_frame_t &frame, uint8_t module_index)
 {
-    if (sm_index < MMC_SM_FIRST || sm_index > MMC_SM_LAST)
+    if (module_index < MMC_M_FIRST || module_index > MMC_M_LAST)
     {
         return false;
     }
-    uint8_t shift = static_cast<uint8_t>(sm_index - MMC_SM_FIRST);
+    uint8_t shift = static_cast<uint8_t>(module_index - MMC_M_FIRST);
     uint16_t mask = static_cast<uint16_t>(1U << shift);
-    return (frame.sm_insertion.raw & mask) != 0U;
+    return (frame.module_insertion.raw & mask) != 0U;
 }
 
 /**
@@ -453,19 +451,19 @@ static inline bool mmc_is_upper_arm_module(uint8_t id)
     {
         return true;
     }
-    if (id < MMC_SM_FIRST || id > MMC_SM_LAST)
+    if (id < MMC_M_FIRST || id > MMC_M_LAST)
     {
         return false;
     }
-    uint8_t offset = static_cast<uint8_t>(id - MMC_SM_FIRST);
-    return offset < (MMC_SM_COUNT / 2);
+    uint8_t offset = static_cast<uint8_t>(id - MMC_M_FIRST);
+    return offset < (MMC_M_COUNT / 2);
 }
 
 static MMC_frame_t dataTX_mmc;
 static MMC_frame_t dataRX_mmc;
 
-float32_t MMC_capacitor_voltage[MMC_SM_COUNT];
-float32_t MMC_arm_current[MMC_SM_COUNT];
+float32_t MMC_capacitor_voltage[MMC_M_COUNT];
+float32_t MMC_arm_current[MMC_M_COUNT];
 
 constexpr size_t MMC_FRAME_SIZE = sizeof(MMC_frame_t);
 
@@ -483,7 +481,6 @@ int8_t CommTask_num;
 
 static bool master = false;
 
-
 /* --------------- LIST OF POSSIBLE BOARD MODES ------------------*/
 enum serial_interface_menu_mode
 {
@@ -493,10 +490,10 @@ enum serial_interface_menu_mode
 
 serial_interface_menu_mode mode = IDLEMODE;
 
-/* --------------- Firmware and control variables ------------------*/
+/* --------------- Firmware CVB variables ------------------*/
 
 /* [us] period of the control task (=critical task) */
-static uint32_t control_task_period = 100; // µs
+static constexpr uint32_t control_task_period = 200; // µs
 static float32_t Ts = control_task_period * 1e-6F; // s
 /* [bool] state of the PWM (ctrl task) */
 static bool pwm_enable = false;
@@ -521,7 +518,7 @@ static float meas_data;
 /* Scope variables */
 static bool enable_acq; // Sets trigger moment if true
 static const uint16_t NB_DATAS = 1028; // Number of data acquired
-static ScopeMimicry scope(NB_DATAS, 14); // Scope configuration with 5 channels
+static ScopeMimicry scope(NB_DATAS, 12); // Scope configuration with 12 channels
 static bool is_downloading; // Records data if true
 static uint32_t scope_timer = 0;
 static uint32_t scope_period = 1; // scope acquire data every t = scope_period * critical_task_period (100 µs) s;
@@ -529,42 +526,31 @@ static uint32_t scope_period = 1; // scope acquire data every t = scope_period *
 /* CVB variables */
 
 static uint8_t index_list[10] = {0,1,2,3,4,5,6,7,8,9}; // Modules general indexes array
-static float32_t number_of_connected_submodules_upper_arm; // Stores number of modules connected in the upper arm (NLM output)
-static float32_t number_of_connected_submodules_lower_arm; // Stores number of modules connected in the lower arm (NLM output)
-static float32_t number_of_connected_submodules_upper_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
-static float32_t number_of_connected_submodules_lower_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
+static float32_t number_of_connected_modules_upper_arm; // Stores number of modules connected in the upper arm (NLM output)
+static float32_t number_of_connected_modules_upper_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
 static float32_t modules_capacitor_voltages_upper_arm[total_number_of_modules_arm]; // Upper arm modules capacitor voltages artificially generated, to be substituted by measured current when implementing MMC
 static uint8_t modules_indexes_upper_arm[total_number_of_modules_arm]; // Upper arm modules indexes to be sorted with the capacitor voltage vector
-static float32_t modules_capacitor_voltages_lower_arm[total_number_of_modules_arm]; // Lower arm modules capacitor voltages artificially generated, to be substituted by measured current when implementing MMC
-static uint8_t modules_indexes_lower_arm[total_number_of_modules_arm]; // Lower arm modules indexes to be sorted with the capacitor voltage vector
 static float32_t i_upper_arm= 1.0F; // Upper arm current - will be updated with physical current measure during test execution
-static float32_t i_lower_arm= -1.0F; // Lower arm current - will be updated with physical current measure during test execution
 
 /* Gate logic */
-uint8_t g_u[total_number_of_modules_arm]; // Gate signals to be sent to the upper modules
-uint8_t g_l[total_number_of_modules_arm]; // Gate signals to be sent to the lower modules
+uint8_t g_u[total_number_of_modules_arm]; // Gate signals to send to the upper modules
 static float32_t g_u_1; // Gate signal M1 - Used for gate signal acquisition by scopemimicry
 static float32_t g_u_2; // Gate signal M2 - Used for gate signal acquisition by scopemimicry
 static float32_t g_u_3; // Gate signal M3 - Used for gate signal acquisition by scopemimicry
 static float32_t g_u_4; // Gate signal M4 - Used for gate signal acquisition by scopemimicry
 static float32_t g_u_5; // Gate signal M5 - Used for gate signal acquisition by scopemimicry
-static float32_t g_l_1; // Gate signal M6 - Used for gate signal acquisition by scopemimicry
-static float32_t g_l_2; // Gate signal M7 - Used for gate signal acquisition by scopemimicry
-static float32_t g_l_3; // Gate signal M8 - Used for gate signal acquisition by scopemimicry
-static float32_t g_l_4; // Gate signal M9 - Used for gate signal acquisition by scopemimicry
-static float32_t g_l_5; // Gate signal M10 - Used for gate signal acquisition by scopemimicry
 
 /* NLM */
 static float32_t m = 1; // Modulation amplitude
 static float32_t a = 1; // Modulation dc part
 static float32_t angle;
 static const float w0 = 2 * PI * f0; // Angular frequency
+
 static float32_t modulation_signal_upper; //[pu] Modulation output upper voltage
-static float32_t modulation_signal_lower; //[pu] Modulation output lower voltage
 
 /* Current measurement filter */
 
-LowPassFirstOrderFilter i_low_filter(Ts, 180e-6F); // Lowpass filter with tau = 180µs -> fc = 880 Hz
+LowPassFirstOrderFilter i_low_filter(Ts, 160e-6F); // Lowpass filter with tau = 180µs -> fc = 880 Hz
 static float32_t i_lowfilter_value;
 
 /* --------------SETUP FUNCTIONS------------------------------- */
@@ -637,14 +623,14 @@ static void update_measurements(void)
 void reception_function(void)
 {
     dataRX_mmc = *(MMC_frame_t *)buffer_rx;
-    uint8_t sender_id = mmc_frame_get_sm_identifier(dataRX_mmc);
+    uint8_t sender_id = mmc_frame_get_module_identifier(dataRX_mmc);
     uint8_t status_code = mmc_frame_get_status_code(dataRX_mmc);
 
     if (module_ID == MMC_LEAD)
     {
-        if ((sender_id >= MMC_SM_FIRST) && (sender_id <= MMC_SM_LAST))
+        if ((sender_id >= MMC_M_FIRST) && (sender_id <= MMC_M_LAST))
         {
-            const uint8_t index = sender_id - MMC_SM_FIRST;
+            const uint8_t index = sender_id - MMC_M_FIRST;
             MMC_capacitor_voltage[index] =
                 mmc_decode_voltage(mmc_frame_get_voltage_raw(dataRX_mmc));
             MMC_arm_current[index] =
@@ -664,7 +650,7 @@ void reception_function(void)
         {
             /* retrieving command from lead message*/
             module_comand = static_cast<uint8_t>(
-                mmc_frame_get_sm_inserted(dataRX_mmc, module_ID));
+                mmc_frame_get_module_inserted(dataRX_mmc, module_ID));
 
             /* retrieving status */
             if (status_code == POWER)
@@ -682,7 +668,7 @@ void reception_function(void)
         if (sender_id == static_cast<uint8_t>(module_ID - 1))
         {
             dataTX_mmc = dataRX_mmc; // Copy the received data to the transmission data
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
             mmc_frame_set_voltage_raw(dataTX_mmc,
                                       mmc_encode_voltage(Cap_voltage));
@@ -721,10 +707,10 @@ void reception_function(void)
  */
 void setup_routine()
 {
-
     /* Informs the module ID in the terminal */
     const uint32_t board_uid = read_board_uid();
     printk("Board UID: 0x%08" PRIX32 "\n", board_uid);
+    printk("Module ID : %u \n", module_ID);
     master = (module_ID == MMC_LEAD);
 
     config_led_LL(); // Configure the LED pin in Low Level
@@ -734,9 +720,20 @@ void setup_routine()
     uint32_t background_task_number =
         task.createBackground(loop_background_task);
 
-    task.createCritical(loop_critical_task, 100);
+    task.createCritical(loop_critical_task, control_task_period);
 
     shield.sensors.enableDefaultTwistSensors();
+
+    if(module_ID == MMC_M1)
+    {
+        shield.sensors.setConversionParametersLinear(V_HIGH,0.0297809746442154,0.0816717736324648);
+        shield.sensors.setConversionParametersLinear(V1_LOW,0.0447118735275233,-85.4652963581883);
+        shield.sensors.setConversionParametersLinear(V2_LOW,0.044724349440928,-85.9790466977148);
+        shield.sensors.setConversionParametersLinear(I1_LOW,0.00572228696154378,-12.9647582710024);
+        shield.sensors.setConversionParametersLinear(I2_LOW,0.00573807392353278,-12.98795596087);
+        shield.sensors.setConversionParametersLinear(I_HIGH,0.00505978197917605,-9.74527087864709);
+
+    }
 
     /* Disconnect electrolytical capacitors from low-side */
     shield.power.disconnectCapacitor(LEG1);
@@ -748,6 +745,7 @@ void setup_routine()
 
     /* Finally, start tasks */
     task.startBackground(background_task_number);
+
     task.startCritical();
     CommTask_num = task.createBackground(loop_communication_task);
     task.startBackground(CommTask_num);
@@ -762,27 +760,25 @@ void setup_routine()
         communication.sync.initMaster();
 
         /* Configures scopemimicry measured variables */
-        scope.connectChannel(modulation_signal_upper, "m_u");
-        scope.connectChannel(number_of_connected_submodules_upper_arm, "N_u");
-        scope.connectChannel(g_u_1, "g_u_1");
-        scope.connectChannel(g_u_2, "g_u_2");
-        scope.connectChannel(g_u_3, "g_u_3");
-        scope.connectChannel(g_u_4, "g_u_4");
-        scope.connectChannel(g_u_5, "g_u_5");
+        scope.connectChannel(number_of_connected_modules_upper_arm, "N_u");
         scope.connectChannel(MMC_capacitor_voltage[0], "v_c_1");
         scope.connectChannel(MMC_capacitor_voltage[1], "v_c_2");
         scope.connectChannel(MMC_capacitor_voltage[2], "v_c_3");
         scope.connectChannel(MMC_capacitor_voltage[3], "v_c_4");
         scope.connectChannel(MMC_capacitor_voltage[4], "v_c_5");
-        scope.connectChannel(MMC_arm_current[0], "i_u");
-        scope.connectChannel(i_lowfilter_value, "i_u_filtered");
+        scope.connectChannel(i_upper_arm, "i_u");
+        scope.connectChannel(g_u_1, "g_u_1");
+        scope.connectChannel(g_u_2, "g_u_2");
+        scope.connectChannel(g_u_3, "g_u_3");
+        scope.connectChannel(g_u_4, "g_u_4");
+        scope.connectChannel(g_u_5, "g_u_5");
+        // scope.connectChannel(i_lowfilter_value, "i_u_filtered");
         scope.set_trigger(&a_trigger);
         scope.set_delay(0.0F);
         scope.start();
 
-        /* Copies from general indexes list the module indexes that compose upper and lower arms, respectively */
-        memcpy(modules_indexes_upper_arm, index_list, total_number_of_modules_arm); 
-        memcpy(modules_indexes_lower_arm, index_list, total_number_of_modules_arm); 
+        /* Copies from general indexes list the module indexes that compose the arm */
+        memcpy(modules_indexes_upper_arm, index_list, total_number_of_modules_arm * sizeof(uint8_t));
     }
     else{
         /* Defines module as follower for communication synchorinization */
@@ -790,13 +786,12 @@ void setup_routine()
     }
 }
 
-
 /* --------------LOOP FUNCTIONS-------------------------------- */
 
 /**
  * This is the communication task.
  * It is used to send to the board via the computer the desired mode
- * IDLE (i) = block all modules or POWER (p) = operate MMC arm with CVB.
+ * IDLE (i) = block all modules or POWER (p) = operate the MMC stack with CVB.
  * 
  * It also sends data acquisition start command (a) and scope data retrieve commands (r).
  */
@@ -895,16 +890,18 @@ void sorting_upper_arm()
 
             counter_loops_sorting++;
         }
+
     /* Choses the modules to connect to the upper arm according to capacitor voltages and arm current */
     for(uint8_t counter = 0; counter < total_number_of_modules_arm; counter++)
         {
             /* Positive arm current */
             // Connect modules with smallest capacitor voltages
             // Disconnect modules with highest capacitor voltages
+
             if(i_upper_arm>=0)
             {
                 uint8_t index_smallest_voltage_capacitor_upper_arm = modules_indexes_upper_arm[counter];
-                if(counter < number_of_connected_submodules_upper_arm)
+                if(counter < number_of_connected_modules_upper_arm)
                 {
                     g_u[index_smallest_voltage_capacitor_upper_arm] = 1;
                 }
@@ -912,6 +909,7 @@ void sorting_upper_arm()
                     g_u[index_smallest_voltage_capacitor_upper_arm] = 0;
                 }
             }
+
             /* Negative arm current */
             // Connect modules with highest capacitor voltages
             // Disconnect modules with smallest capacitor voltages
@@ -919,7 +917,7 @@ void sorting_upper_arm()
             {
                 uint8_t higher_index = total_number_of_modules_arm-1-counter;
                 uint8_t index_highest_voltage_capacitor_upper_arm = modules_indexes_upper_arm[higher_index];
-                if(counter < number_of_connected_submodules_upper_arm)
+                if(counter < number_of_connected_modules_upper_arm)
                 {
                     g_u[index_highest_voltage_capacitor_upper_arm] = 1;
                 }
@@ -933,8 +931,8 @@ void sorting_upper_arm()
 
 /**
  * This is the code loop of the critical task
- * It is executed every 100 micro-seconds defined in the setup_software
- * function.
+ * It is executed every control_task_period (200 micro-seconds) defined in the
+ * setup_routine function.
  *
  * In the critical task, we implement the MMC control algorithms that will
  * run in Real Time.
@@ -945,6 +943,7 @@ void loop_critical_task()
 
     if (mode == POWERMODE)
     {
+        
         if (module_ID == MMC_LEAD) //CONTROL INSIDE LEAD - Modulation NLM + CVB algorithm execution
         {
             /* Modulation signal generation in open-loop */
@@ -952,36 +951,34 @@ void loop_critical_task()
             angle = ot_modulo_2pi(angle);
             m = 1;
             modulation_signal_upper = (a + m * ot_sin(angle)) / (2.0);
-            modulation_signal_lower = (a - m * ot_sin(angle)) / (2.0);
 
             /* Number of modules N_on to be connected on the arm according to modulation signal by Nearest Level Modulation (NLM)  */
-            number_of_connected_submodules_upper_arm = round(total_number_of_modules_arm*modulation_signal_upper);
-            number_of_connected_submodules_lower_arm = round(total_number_of_modules_arm*modulation_signal_lower);
+            number_of_connected_modules_upper_arm = round(total_number_of_modules_arm*modulation_signal_upper); 
 
             /* Updating arm current measurements and filtering */
-            i_upper_arm = MMC_arm_current[0];
-            i_lowfilter_value = i_low_filter.calculateWithReturn(i_upper_arm); // filtered current value
-            i_upper_arm = i_lowfilter_value;
+            i_upper_arm = MMC_arm_current[0]; // We get the current from module 1
+            // i_lowfilter_value = i_low_filter.calculateWithReturn(i_upper_arm); // filtered current value
+            // i_upper_arm = i_lowfilter_value;
 
             /* Modules choice with Capacitor Voltage Balancing (CVB) sorting */
             // Executed only when N_on changes
-            if (number_of_connected_submodules_upper_arm != number_of_connected_submodules_upper_arm_past){
+            if (number_of_connected_modules_upper_arm != number_of_connected_modules_upper_arm_past){
                 
                 /* Updating capacitor voltages measurements */
                 memcpy(modules_capacitor_voltages_upper_arm, MMC_capacitor_voltage, total_number_of_modules_arm * sizeof(float32_t));
 
                 /* Executes the CVB algorithm, chosing which modules to connect */
-                sorting_upper_arm();
-                number_of_connected_submodules_upper_arm_past = number_of_connected_submodules_upper_arm;
+                sorting_upper_arm(); 
+                number_of_connected_modules_upper_arm_past = number_of_connected_modules_upper_arm;
             }
 
-            dataTX_mmc.sm_insertion.raw = 0U;
+            dataTX_mmc.module_insertion.raw = 0U;
 
             /* Modules state assignment according to CVB output */
             for (uint8_t counter = 0; counter < total_number_of_modules_arm; counter++) {
-                // mmc_frame_set_sm_inserted(trame_communication, module function (SM1,SM2,SM3,...), g_u associated to the module (SM1,SM2,SM3,...))
+                // mmc_frame_set_module_inserted(trame_communication, module function (M1,M2,M3,...), g_u associated to the module (M1,M2,M3,...))
                 // g_u[counter]: true = connected, false = disconnected
-                mmc_frame_set_sm_inserted(dataTX_mmc, MMC_SM1 + counter, g_u[counter] != 0U);
+                mmc_frame_set_module_inserted(dataTX_mmc, MMC_M1 + counter, g_u[counter] != 0U);
             }
 
             /* Fills all other communication trame spaces */
@@ -989,7 +986,7 @@ void loop_critical_task()
 
             mmc_frame_set_status_code(dataTX_mmc, POWER);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_voltage_raw(dataTX_mmc, mmc_encode_voltage(Cap_voltage));
             mmc_frame_set_current_raw(dataTX_mmc, mmc_encode_current(Arm_current));
             memcpy(buffer_tx, &dataTX_mmc, sizeof(dataTX_mmc));
@@ -1014,7 +1011,6 @@ void loop_critical_task()
         }
         else //CONTROL INSIDE MODULE - own switching only
         {
-            
             /* Verifies if module received command changed */
             if (module_comand != module_command_past)
             {
@@ -1028,26 +1024,12 @@ void loop_critical_task()
                 {
                     change_state_command = false; // Reset the flag
                 }
-                shield.power.setDutyCycle(LEG1,0.9); // Duty cycle = 0.9 makes Q1 mostly closed and Q2 mostly open
+                shield.power.setDutyCycle(LEG1,1.0); // Duty cycle = 1.0 makes Q1 mostly closed and Q2 mostly open
                 if (!pwm_enable)
                 {
                     pwm_enable = true;
                     shield.power.start(LEG1);
                 }
-            }
-            
-            //if command is 2, module changes to blocked state (not used)
-            else if (module_comand == 2)
-            {
-                if (change_state_command)
-                {
-                    change_state_command = false; // Reset the flag
-                }
-                if (pwm_enable == true)
-                {
-                    shield.power.stop(ALL); // Makes Q1 open and Q2 open
-                }
-                pwm_enable = false;
             }
 
             //if command is 0, module changes to disconnected state
@@ -1074,11 +1056,11 @@ void loop_critical_task()
         /* Made  such that the LEAD send IDLE flag only once to all modules */
         if (!send_idle && module_ID == MMC_LEAD)
         {
-            dataTX_mmc.sm_insertion.raw = 0U;
+            dataTX_mmc.module_insertion.raw = 0U;
             dataTX_mmc.status.raw = 0U;
             mmc_frame_set_status_code(dataTX_mmc, IDLE);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_voltage_raw(dataTX_mmc, mmc_encode_voltage(Cap_voltage));
             mmc_frame_set_current_raw(dataTX_mmc, mmc_encode_current(Arm_current));
             memcpy(buffer_tx, &dataTX_mmc, sizeof(dataTX_mmc));

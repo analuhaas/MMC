@@ -66,13 +66,15 @@ If not done before, repeat for the stack modules boards:
 
 4.	Recommended for a typical MMC behavior: Configure all 5 modules boards with the minor hardware modifications indicated in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_modifications_MMC_tutorial.md).
 
-5.  Calibrate the module sensors as explained in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_calibration_tutorial.md).
+5.  Calibrate the module sensors. You can do it in two ways:
+    - manually, reading the measurements on the serial monitor and computing the gains and offsets in a spreadsheet, as explained in the [manual calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_tutorial.md);
+    - automatically, with MATLAB and a PicoScope acquiring the measurements and computing the gains and offsets, as explained in the [automated calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_automated_tutorial.md).
 
 6.	Test the module using the low-frequency and high-frequency sequences as explained in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/module_test_sequences_tutorial.md).
 
 ## Stack setup and test
 
-If stacks not done yet, repeat for the upper and lower stacks the [stack test tutorial](../../../MMC_documentation/Prototype%20tutorials/stack_openloop_CVB_test_tutorial.md). Be sure to verify if the current and voltage measurements of the modules are calibrated.
+If stacks not done yet, repeat for the upper and lower stacks the [stack test tutorial](../../../MMC_documentation/Prototype%20tutorials/stack_NLM_CVB_test_tutorial.md). Be sure to verify if the current and voltage measurements of the modules are calibrated.
 
 ## Phase setup 
 
@@ -116,7 +118,7 @@ After making the connections and connecting the PC to the central controller boa
     b.  If the module needs specific calibration value, insert this code snippet on setup_routine(). Change the module ID and the gain and offset to correspond to the good module and calibration.
 
         ``` ruby
-        if(module_ID == MMC_SMx)
+        if(module_ID == MMC_Mx)
             {
                 shield.sensors.setConversionParametersLinear(V_HIGH,gain,offset);
                 shield.sensors.setConversionParametersLinear(V1_LOW,gain,offset);
@@ -134,16 +136,16 @@ After making the connections and connecting the PC to the central controller boa
         /* --------------- To be changed by user --------------------- */
 
         constexpr uint32_t UID_MMC_LEAD_BOARD = 0x002B002A;
-        constexpr uint32_t UID_MMC_SM1_BOARD = 0x0033004C;
-        constexpr uint32_t UID_MMC_SM2_BOARD = 0x0031001B;
-        constexpr uint32_t UID_MMC_SM3_BOARD = 0x00330049;
-        constexpr uint32_t UID_MMC_SM4_BOARD = 0x0033004B;
-        constexpr uint32_t UID_MMC_SM5_BOARD = 0x00330054;
-        constexpr uint32_t UID_MMC_SM6_BOARD = 0x0032003F;
-        constexpr uint32_t UID_MMC_SM7_BOARD = 0x004E0048;
-        constexpr uint32_t UID_MMC_SM8_BOARD = 0x00470026;
-        constexpr uint32_t UID_MMC_SM9_BOARD = 0x004C001D;
-        constexpr uint32_t UID_MMC_SM10_BOARD = 0x0047002B;
+        constexpr uint32_t UID_MMC_M1_BOARD = 0x0033004C;
+        constexpr uint32_t UID_MMC_M2_BOARD = 0x0031001B;
+        constexpr uint32_t UID_MMC_M3_BOARD = 0x00330049;
+        constexpr uint32_t UID_MMC_M4_BOARD = 0x0033004B;
+        constexpr uint32_t UID_MMC_M5_BOARD = 0x00330054;
+        constexpr uint32_t UID_MMC_M6_BOARD = 0x0032003F;
+        constexpr uint32_t UID_MMC_M7_BOARD = 0x004E0048;
+        constexpr uint32_t UID_MMC_M8_BOARD = 0x00470026;
+        constexpr uint32_t UID_MMC_M9_BOARD = 0x004C001D;
+        constexpr uint32_t UID_MMC_M10_BOARD = 0x0047002B;
         ```
 
      e. Do again: Build ![](figures/build.png) and Upload ![](figures/upload.png) the code main.cpp into the board.
@@ -163,7 +165,7 @@ After making the connections and connecting the PC to the central controller boa
 
 ## Plotting data from supervisor scope
 
-26. Treat the resulting csv data from supervisor scope to obtain the capacitors voltage using the [tutorial](../../Other/scopemimicry_capacitor_voltage_data/How_to_get_vcap_scopemimicry.md). Any change in the scope variables will need code adaptation.
+26. Treat the resulting csv data from supervisor scope to obtain the capacitors voltage using the [tutorial](../../Other/scopemimicry_plot/README.md). Any change in the scope variables will need code adaptation.
 
 ## Expected results
 

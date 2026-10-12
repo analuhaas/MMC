@@ -49,16 +49,16 @@
 
 
 #define MMC_LEAD 0
-#define MMC_SM1 1
-#define MMC_SM2 2
-#define MMC_SM3 3
-#define MMC_SM4 4
-#define MMC_SM5 5
-#define MMC_SM6 6
-#define MMC_SM7 7
-#define MMC_SM8 8
-#define MMC_SM9 9
-#define MMC_SM10 10
+#define MMC_M1 1
+#define MMC_M2 2
+#define MMC_M3 3
+#define MMC_M4 4
+#define MMC_M5 5
+#define MMC_M6 6
+#define MMC_M7 7
+#define MMC_M8 8
+#define MMC_M9 9
+#define MMC_M10 10
 
 #define IDLE 0
 #define POWER 1
@@ -67,9 +67,9 @@
 #define UNDER_VOLTAGE 4
 #define OVER_CURRENT 5
 
-constexpr uint8_t MMC_SM_COUNT = 10;
-constexpr uint8_t MMC_SM_FIRST = MMC_SM1;
-constexpr uint8_t MMC_SM_LAST = MMC_SM10;
+constexpr uint8_t MMC_M_COUNT = 10;
+constexpr uint8_t MMC_M_FIRST = MMC_M1;
+constexpr uint8_t MMC_M_LAST = MMC_M10;
 
 /* -------------- GENERAL MMC DEFINITIONS -------------------- */
 /* --------------- To be changed by user --------------------- */
@@ -85,16 +85,16 @@ constexpr float32_t overcurrent_tolerance = 8.0F; //[A] Set overcurrent toleranc
 /* --------------- To be changed by user --------------------- */
 
 constexpr uint32_t UID_MMC_LEAD_BOARD = 0x002B002A;
-constexpr uint32_t UID_MMC_SM1_BOARD = 0x0033004C;
-constexpr uint32_t UID_MMC_SM2_BOARD = 0x0031001B;
-constexpr uint32_t UID_MMC_SM3_BOARD = 0x00330049;
-constexpr uint32_t UID_MMC_SM4_BOARD = 0x0033004B;
-constexpr uint32_t UID_MMC_SM5_BOARD = 0x00330054;
-constexpr uint32_t UID_MMC_SM6_BOARD = 0x0032003F;
-constexpr uint32_t UID_MMC_SM7_BOARD = 0x004E0048;
-constexpr uint32_t UID_MMC_SM8_BOARD = 0x00470026;
-constexpr uint32_t UID_MMC_SM9_BOARD = 0x004C001D;
-constexpr uint32_t UID_MMC_SM10_BOARD = 0x0047002B;
+constexpr uint32_t UID_MMC_M1_BOARD = 0x0033004C;
+constexpr uint32_t UID_MMC_M2_BOARD = 0x0031001B;
+constexpr uint32_t UID_MMC_M3_BOARD = 0x00330049;
+constexpr uint32_t UID_MMC_M4_BOARD = 0x0033004B;
+constexpr uint32_t UID_MMC_M5_BOARD = 0x00330054;
+constexpr uint32_t UID_MMC_M6_BOARD = 0x0032003F;
+constexpr uint32_t UID_MMC_M7_BOARD = 0x004E0048;
+constexpr uint32_t UID_MMC_M8_BOARD = 0x00470026;
+constexpr uint32_t UID_MMC_M9_BOARD = 0x004C001D;
+constexpr uint32_t UID_MMC_M10_BOARD = 0x0047002B;
 
 /* --------- BOARD IDENTIFICATION functions ------------------ */
 static uint32_t read_board_uid()
@@ -110,28 +110,28 @@ static uint8_t detect_module_id()
     {
     case UID_MMC_LEAD_BOARD:
         return MMC_LEAD;
-    case UID_MMC_SM1_BOARD:
-        return MMC_SM1;
-    case UID_MMC_SM2_BOARD:
-        return MMC_SM2;
-    case UID_MMC_SM3_BOARD:
-        return MMC_SM3;
-    case UID_MMC_SM4_BOARD:
-        return MMC_SM4;
-    case UID_MMC_SM5_BOARD:
-        return MMC_SM5;
-    case UID_MMC_SM6_BOARD:
-        return MMC_SM6;
-    case UID_MMC_SM7_BOARD:
-        return MMC_SM7;
-    case UID_MMC_SM8_BOARD:
-        return MMC_SM8;
-    case UID_MMC_SM9_BOARD:
-        return MMC_SM9;
-    case UID_MMC_SM10_BOARD:
-        return MMC_SM10;
+    case UID_MMC_M1_BOARD:
+        return MMC_M1;
+    case UID_MMC_M2_BOARD:
+        return MMC_M2;
+    case UID_MMC_M3_BOARD:
+        return MMC_M3;
+    case UID_MMC_M4_BOARD:
+        return MMC_M4;
+    case UID_MMC_M5_BOARD:
+        return MMC_M5;
+    case UID_MMC_M6_BOARD:
+        return MMC_M6;
+    case UID_MMC_M7_BOARD:
+        return MMC_M7;
+    case UID_MMC_M8_BOARD:
+        return MMC_M8;
+    case UID_MMC_M9_BOARD:
+        return MMC_M9;
+    case UID_MMC_M10_BOARD:
+        return MMC_M10;
     default:
-        return MMC_SM1;
+        return MMC_M1;
     }
 }
 
@@ -224,7 +224,7 @@ void loop_communication_task();
 /* --------------USER VARIABLES DECLARATIONS------------------- */
 
 /* Auto-detected module ID (uses dummy UIDs for now). */
-uint8_t module_ID = detect_module_id(); // The ID of the module, can be set to MMC_LEAD or any other SMx
+uint8_t module_ID = detect_module_id(); // The ID of the module, can be set to MMC_LEAD or any other Mx
 
 static uint8_t module_comand; // The command the followers needs to apply
 static uint8_t module_command_past; // The command the followers applied in t-1 (last critical task)
@@ -239,11 +239,11 @@ constexpr uint32_t MMC_STATUS_UPPER_ARM_MASK = (1UL << MMC_STATUS_CODE_BITS);
  * @brief Frame exchanged over the RS485 communication bus.
  *
  * Structure overview:
- * - `sm_insertion`: bit-packed insertion flags for each submodule.
+ * - `module_insertion`: bit-packed insertion flags for each module.
  * - `capacitor_voltage_raw`: 12-bit encoded capacitor voltage.
  * - `arm_current_raw`: 12-bit encoded arm current.
  * - `status`: 3-bit global status level plus the arm selection flag.
- * - `sm_id`: identifier of the sender (lead or submodule index).
+ * - `sender_id`: identifier of the sender (lead or module index).
  */
 struct MMC_frame
 {
@@ -252,18 +252,18 @@ struct MMC_frame
         uint16_t raw;
         struct
         {
-            uint16_t sm1_inserted : 1;
-            uint16_t sm2_inserted : 1;
-            uint16_t sm3_inserted : 1;
-            uint16_t sm4_inserted : 1;
-            uint16_t sm5_inserted : 1;
-            uint16_t sm6_inserted : 1;
-            uint16_t sm7_inserted : 1;
-            uint16_t sm8_inserted : 1;
-            uint16_t sm9_inserted : 1;
-            uint16_t sm10_inserted : 1;
+            uint16_t m1_inserted : 1;
+            uint16_t m2_inserted : 1;
+            uint16_t m3_inserted : 1;
+            uint16_t m4_inserted : 1;
+            uint16_t m5_inserted : 1;
+            uint16_t m6_inserted : 1;
+            uint16_t m7_inserted : 1;
+            uint16_t m8_inserted : 1;
+            uint16_t m9_inserted : 1;
+            uint16_t m10_inserted : 1;
         } bits;
-    } sm_insertion;
+    } module_insertion;
     uint16_t capacitor_voltage_raw : 12;
     uint16_t arm_current_raw : 12;
     union
@@ -275,7 +275,7 @@ struct MMC_frame
             uint8_t upper_arm_frame : 1;
         } bits;
     } status;
-    uint8_t sm_id;
+    uint8_t sender_id;
 } __packed;
 
 typedef MMC_frame MMC_frame_t;
@@ -325,68 +325,68 @@ static inline uint16_t mmc_frame_get_current_raw(const MMC_frame_t &frame)
 }
 
 /**
- * @brief Set the submodule identifier associated with an MMC frame.
+ * @brief Set the module identifier associated with an MMC frame.
  *
  * @param frame Frame to update.
- * @param id Identifier of the sender (lead or submodule).
+ * @param id Identifier of the sender (lead or module).
  */
-static inline void mmc_frame_set_sm_identifier(MMC_frame_t &frame, uint8_t id)
+static inline void mmc_frame_set_module_identifier(MMC_frame_t &frame, uint8_t id)
 {
-    frame.sm_id = id;
+    frame.sender_id = id;
 }
 
 /**
- * @brief Read the submodule identifier stored inside an MMC frame.
+ * @brief Read the module identifier stored inside an MMC frame.
  *
  * @param frame Frame to inspect.
  * @return Sender identifier extracted from the frame.
  */
-static inline uint8_t mmc_frame_get_sm_identifier(const MMC_frame_t &frame)
+static inline uint8_t mmc_frame_get_module_identifier(const MMC_frame_t &frame)
 {
-    return frame.sm_id;
+    return frame.sender_id;
 }
 
 /**
- * @brief Update the insertion flag for a given submodule in an MMC frame.
+ * @brief Update the insertion flag for a given module in an MMC frame.
  *
  * @param frame Frame to modify.
- * @param sm_index Submodule identifier to update.
- * @param inserted Set to true if the submodule is inserted.
+ * @param module_index Module identifier to update.
+ * @param inserted Set to true if the module is inserted.
  */
-static inline void mmc_frame_set_sm_inserted(MMC_frame_t &frame, uint8_t sm_index, bool inserted)
+static inline void mmc_frame_set_module_inserted(MMC_frame_t &frame, uint8_t module_index, bool inserted)
 {
-    if (sm_index < MMC_SM_FIRST || sm_index > MMC_SM_LAST)
+    if (module_index < MMC_M_FIRST || module_index > MMC_M_LAST)
     {
         return;
     }
-    uint8_t shift = static_cast<uint8_t>(sm_index - MMC_SM_FIRST);
+    uint8_t shift = static_cast<uint8_t>(module_index - MMC_M_FIRST);
     uint16_t mask = static_cast<uint16_t>(1U << shift);
     if (inserted)
     {
-        frame.sm_insertion.raw |= mask;
+        frame.module_insertion.raw |= mask;
     }
     else
     {
-        frame.sm_insertion.raw &= static_cast<uint16_t>(~mask);
+        frame.module_insertion.raw &= static_cast<uint16_t>(~mask);
     }
 }
 
 /**
- * @brief Check whether a submodule is marked as inserted in an MMC frame.
+ * @brief Check whether a module is marked as inserted in an MMC frame.
  *
  * @param frame Frame to inspect.
- * @param sm_index Submodule identifier to check.
+ * @param module_index Module identifier to check.
  * @return True when the insertion flag is set, false otherwise.
  */
-static inline bool mmc_frame_get_sm_inserted(const MMC_frame_t &frame, uint8_t sm_index)
+static inline bool mmc_frame_get_module_inserted(const MMC_frame_t &frame, uint8_t module_index)
 {
-    if (sm_index < MMC_SM_FIRST || sm_index > MMC_SM_LAST)
+    if (module_index < MMC_M_FIRST || module_index > MMC_M_LAST)
     {
         return false;
     }
-    uint8_t shift = static_cast<uint8_t>(sm_index - MMC_SM_FIRST);
+    uint8_t shift = static_cast<uint8_t>(module_index - MMC_M_FIRST);
     uint16_t mask = static_cast<uint16_t>(1U << shift);
-    return (frame.sm_insertion.raw & mask) != 0U;
+    return (frame.module_insertion.raw & mask) != 0U;
 }
 
 /**
@@ -453,19 +453,19 @@ static inline bool mmc_is_upper_arm_module(uint8_t id)
     {
         return true;
     }
-    if (id < MMC_SM_FIRST || id > MMC_SM_LAST)
+    if (id < MMC_M_FIRST || id > MMC_M_LAST)
     {
         return false;
     }
-    uint8_t offset = static_cast<uint8_t>(id - MMC_SM_FIRST);
-    return offset < (MMC_SM_COUNT / 2);
+    uint8_t offset = static_cast<uint8_t>(id - MMC_M_FIRST);
+    return offset < (MMC_M_COUNT / 2);
 }
 
 static MMC_frame_t dataTX_mmc;
 static MMC_frame_t dataRX_mmc;
 
-float32_t MMC_capacitor_voltage[MMC_SM_COUNT];
-float32_t MMC_arm_current[MMC_SM_COUNT];
+float32_t MMC_capacitor_voltage[MMC_M_COUNT];
+float32_t MMC_arm_current[MMC_M_COUNT];
 
 constexpr size_t MMC_FRAME_SIZE = sizeof(MMC_frame_t);
 
@@ -528,10 +528,10 @@ static uint32_t scope_period = 1; // scope acquire data every t = scope_period *
 /* CVB variables */
 
 static uint8_t index_list[10] = {0,1,2,3,4,5,6,7,8,9}; // Modules general indexes array
-static float32_t number_of_connected_submodules_upper_arm; // Stores number of modules connected in the upper arm (NLM output)
-static float32_t number_of_connected_submodules_lower_arm; // Stores number of modules connected in the lower arm (NLM output)
-static float32_t number_of_connected_submodules_upper_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
-static float32_t number_of_connected_submodules_lower_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
+static float32_t number_of_connected_modules_upper_arm; // Stores number of modules connected in the upper arm (NLM output)
+static float32_t number_of_connected_modules_lower_arm; // Stores number of modules connected in the lower arm (NLM output)
+static float32_t number_of_connected_modules_upper_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
+static float32_t number_of_connected_modules_lower_arm_past = 0.0F; // Stores number of modules connected in the upper arm in t-1
 static float32_t modules_capacitor_voltages_upper_arm[total_number_of_modules_arm]; // Upper arm modules capacitor voltages artificially generated, to be substituted by measured current when implementing MMC
 static uint8_t modules_indexes_upper_arm[total_number_of_modules_arm]; // Upper arm modules indexes to be sorted with the capacitor voltage vector
 static float32_t modules_capacitor_voltages_lower_arm[total_number_of_modules_arm]; // Lower arm modules capacitor voltages artificially generated, to be substituted by measured current when implementing MMC
@@ -683,14 +683,14 @@ static void update_measurements(void)
 void reception_function(void)
 {
     dataRX_mmc = *(MMC_frame_t *)buffer_rx;
-    uint8_t sender_id = mmc_frame_get_sm_identifier(dataRX_mmc);
+    uint8_t sender_id = mmc_frame_get_module_identifier(dataRX_mmc);
     uint8_t status_code = mmc_frame_get_status_code(dataRX_mmc);
 
     if (module_ID == MMC_LEAD)
     {
-        if ((sender_id >= MMC_SM_FIRST) && (sender_id <= MMC_SM_LAST))
+        if ((sender_id >= MMC_M_FIRST) && (sender_id <= MMC_M_LAST))
         {
-            const uint8_t index = sender_id - MMC_SM_FIRST;
+            const uint8_t index = sender_id - MMC_M_FIRST;
             MMC_capacitor_voltage[index] =
                 mmc_decode_voltage(mmc_frame_get_voltage_raw(dataRX_mmc));
             MMC_arm_current[index] =
@@ -710,7 +710,7 @@ void reception_function(void)
         {
             /* retrieving command from lead message*/
             module_comand = static_cast<uint8_t>(
-                mmc_frame_get_sm_inserted(dataRX_mmc, module_ID));
+                mmc_frame_get_module_inserted(dataRX_mmc, module_ID));
 
             /* retrieving status */
             if (status_code == POWER)
@@ -728,7 +728,7 @@ void reception_function(void)
         if (sender_id == static_cast<uint8_t>(module_ID - 1))
         {
             dataTX_mmc = dataRX_mmc; // Copy the received data to the transmission data
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
             mmc_frame_set_voltage_raw(dataTX_mmc,
                                       mmc_encode_voltage(Cap_voltage));
@@ -784,7 +784,7 @@ void setup_routine()
 
     shield.sensors.enableDefaultTwistSensors();
 
-    if(module_ID == MMC_SM1)
+    if(module_ID == MMC_M1)
     {
         shield.sensors.setConversionParametersLinear(V_HIGH,0.0297809746442154,0.0816717736324648);
         shield.sensors.setConversionParametersLinear(V1_LOW,0.0447118735275233,-85.4652963581883);
@@ -794,7 +794,7 @@ void setup_routine()
         shield.sensors.setConversionParametersLinear(I_HIGH,0.00505978197917605,-9.74527087864709);
 
     }
-    if(module_ID == MMC_SM6)
+    if(module_ID == MMC_M6)
     {
         shield.sensors.setConversionParametersLinear(V_HIGH,0.0297391039983399,0.323800681173033);
         shield.sensors.setConversionParametersLinear(V1_LOW,0.0449253808069436,-87.8192961435065);
@@ -829,8 +829,8 @@ void setup_routine()
         communication.sync.initMaster();
 
         /* Configures scopemimicry measured variables */
-        scope.connectChannel(number_of_connected_submodules_upper_arm, "N_u");
-        scope.connectChannel(number_of_connected_submodules_lower_arm, "N_l");
+        scope.connectChannel(number_of_connected_modules_upper_arm, "N_u");
+        scope.connectChannel(number_of_connected_modules_lower_arm, "N_l");
         scope.connectChannel(MMC_capacitor_voltage[5], "v_c_6");
         scope.connectChannel(MMC_capacitor_voltage[6], "v_c_7");
         scope.connectChannel(MMC_capacitor_voltage[7], "v_c_8");
@@ -973,7 +973,7 @@ void sorting_upper_arm()
             if(i_upper_arm>=0)
             {
                 uint8_t index_smallest_voltage_capacitor_upper_arm = modules_indexes_upper_arm[counter];
-                if(counter < number_of_connected_submodules_upper_arm)
+                if(counter < number_of_connected_modules_upper_arm)
                 {
                     g_u[index_smallest_voltage_capacitor_upper_arm] = 1;
                 }
@@ -989,7 +989,7 @@ void sorting_upper_arm()
             {
                 uint8_t higher_index = total_number_of_modules_arm-1-counter;
                 uint8_t index_highest_voltage_capacitor_upper_arm = modules_indexes_upper_arm[higher_index];
-                if(counter < number_of_connected_submodules_upper_arm)
+                if(counter < number_of_connected_modules_upper_arm)
                 {
                     g_u[index_highest_voltage_capacitor_upper_arm] = 1;
                 }
@@ -1042,7 +1042,7 @@ void sorting_lower_arm()
             if(i_lower_arm>=0)
             {
                 uint8_t index_smallest_voltage_capacitor_lower_arm = modules_indexes_lower_arm[counter];
-                if(counter < number_of_connected_submodules_lower_arm)
+                if(counter < number_of_connected_modules_lower_arm)
                 {
                     g_l[index_smallest_voltage_capacitor_lower_arm] = 1;
                 }
@@ -1058,7 +1058,7 @@ void sorting_lower_arm()
             {
                 uint8_t higher_index = total_number_of_modules_arm-1-counter;
                 uint8_t index_highest_voltage_capacitor_lower_arm = modules_indexes_lower_arm[higher_index];
-                if(counter < number_of_connected_submodules_lower_arm)
+                if(counter < number_of_connected_modules_lower_arm)
                 {
                     g_l[index_highest_voltage_capacitor_lower_arm] = 1;
                 }
@@ -1095,8 +1095,8 @@ void loop_critical_task()
             modulation_signal_lower = (a - m * ot_sin(angle)) / (2.0);
 
             /* Number of modules N_on to be connected on the arm according to modulation signal by Nearest Level Modulation (NLM)  */
-            number_of_connected_submodules_upper_arm = round(total_number_of_modules_arm*modulation_signal_upper); 
-            number_of_connected_submodules_lower_arm = round(total_number_of_modules_arm*modulation_signal_lower);
+            number_of_connected_modules_upper_arm = round(total_number_of_modules_arm*modulation_signal_upper); 
+            number_of_connected_modules_lower_arm = round(total_number_of_modules_arm*modulation_signal_lower);
 
             /* Updating arm current measurements and filtering */
             // i_upper_arm = 1.0F; // We get the current from module 1
@@ -1110,7 +1110,7 @@ void loop_critical_task()
 
             /* Modules choice with Capacitor Voltage Balancing (CVB) sorting */
             // Executed only when N_on changes
-            if (number_of_connected_submodules_upper_arm != number_of_connected_submodules_upper_arm_past){
+            if (number_of_connected_modules_upper_arm != number_of_connected_modules_upper_arm_past){
                 
                 /* Updating capacitor voltages measurements */
                 memcpy(modules_capacitor_voltages_upper_arm, MMC_capacitor_voltage, total_number_of_modules_arm * sizeof(float32_t));
@@ -1119,18 +1119,18 @@ void loop_critical_task()
                 /* Executes the CVB algorithm, chosing which modules to connect */
                 sorting_upper_arm(); 
                 sorting_lower_arm(); 
-                number_of_connected_submodules_upper_arm_past = number_of_connected_submodules_upper_arm;
-                number_of_connected_submodules_lower_arm_past = number_of_connected_submodules_lower_arm;
+                number_of_connected_modules_upper_arm_past = number_of_connected_modules_upper_arm;
+                number_of_connected_modules_lower_arm_past = number_of_connected_modules_lower_arm;
             }
 
-            dataTX_mmc.sm_insertion.raw = 0U;
+            dataTX_mmc.module_insertion.raw = 0U;
 
             /* Modules state assignment according to CVB output */
             for (uint8_t counter = 0; counter < total_number_of_modules_arm; counter++) {
-                // mmc_frame_set_sm_inserted(trame_communication, module function (SM1,SM2,SM3,...), g_u associated to the module (SM1,SM2,SM3,...))
+                // mmc_frame_set_module_inserted(trame_communication, module function (M1,M2,M3,...), g_u associated to the module (M1,M2,M3,...))
                 // g_u[counter]: true = connected, false = disconnected
-                mmc_frame_set_sm_inserted(dataTX_mmc, MMC_SM1 + counter, g_u[counter] != 0U);
-                mmc_frame_set_sm_inserted(dataTX_mmc, MMC_SM6 + counter, g_l[counter] != 0U);
+                mmc_frame_set_module_inserted(dataTX_mmc, MMC_M1 + counter, g_u[counter] != 0U);
+                mmc_frame_set_module_inserted(dataTX_mmc, MMC_M6 + counter, g_l[counter] != 0U);
             }
 
             /* Fills all other communication trame spaces */
@@ -1138,7 +1138,7 @@ void loop_critical_task()
 
             mmc_frame_set_status_code(dataTX_mmc, POWER);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_voltage_raw(dataTX_mmc, mmc_encode_voltage(Cap_voltage));
             mmc_frame_set_current_raw(dataTX_mmc, mmc_encode_current(Arm_current));
             memcpy(buffer_tx, &dataTX_mmc, sizeof(dataTX_mmc));
@@ -1222,11 +1222,11 @@ void loop_critical_task()
         /* Made  such that the LEAD send IDLE flag only once to all modules */
         if (!send_idle && module_ID == MMC_LEAD)
         {
-            dataTX_mmc.sm_insertion.raw = 0U;
+            dataTX_mmc.module_insertion.raw = 0U;
             dataTX_mmc.status.raw = 0U;
             mmc_frame_set_status_code(dataTX_mmc, IDLE);
             mmc_frame_set_upper_arm_flag(dataTX_mmc, mmc_is_upper_arm_module(module_ID));
-            mmc_frame_set_sm_identifier(dataTX_mmc, module_ID);
+            mmc_frame_set_module_identifier(dataTX_mmc, module_ID);
             mmc_frame_set_voltage_raw(dataTX_mmc, mmc_encode_voltage(Cap_voltage));
             mmc_frame_set_current_raw(dataTX_mmc, mmc_encode_current(Arm_current));
             memcpy(buffer_tx, &dataTX_mmc, sizeof(dataTX_mmc));

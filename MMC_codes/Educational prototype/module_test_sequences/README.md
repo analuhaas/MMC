@@ -4,7 +4,7 @@ Remark: The difference between this test and the original module tests of previo
 
 ## Objectives and context
 
-The goal of this tutorial is to test a individual MMC module operation in all its states in both low and high frequency. For that, we used the circuit structure below. R_{dec} resistance is connected in parallel to the module in order to emulated negative currents discharging the module capacitor.
+The goal of this tutorial is to test a individual MMC module operation in all its states in both low and high frequency. For that, we used the circuit structure below. $R_{p}$ resistance is connected in parallel to the module in order to emulated negative currents discharging the module capacitor. An additional capacitor $C_{High}'$ can be connected to the VHigh and GND in parallel to $C_{High}$ in order to increase the module capacitance.
 
 <img src="figures/MMC_module_test_theoric_simple_electrical_circuit.png" alt="MMC module test circuit" width="600"/>
 
@@ -37,17 +37,45 @@ Blocked state:
 
 ## Test sequences
 
-The module test passes by two sequences: a low-frequency sequence (f<10 Hz) and a high-frequency sequence.
+The module is tested with two sequences: a low-frequency (LF) sequence and a high-frequency (HF) sequence. Both test the three states (connected, disconnected and blocked) with positive and negative module current, and both are split in two parts:
 
-- The low-frequency sequence objective is to verify if the TWIST/SPIN board is correctly programmed and behaves like a half-bridge module (with three states: connected, disconnected, and blocked). The figure below shows the complete low-frequency sequence. The turn on of the DC voltage $u_{dc}$ sets the start of the sequence "positive current" step. In this step, the current flows only in the positive sense of $i_{mod}$. After this first step is completed, the user has to manually turn off $u_{dc}$ supply to start the "negative current" step. The start of the "negative current" step is noted by the X moment in the timeline. During this step, as the left side ($u_{dc}$ and resistors) of the circuit has lower voltage than the capacitor, the current can only flow in the negative sense of $i_{mod}$. This will enable to observe the capacitor discharge.
+- **Positive current part**: starts when you turn on the DC supply $u_{dc}$ (t = 0). The supply drives the current in the positive sense of $i_{mod}$, charging the module capacitor.
+- **Negative current part**: starts when you turn off $u_{dc}$ (instant X on the timelines). The capacitor is then at a higher voltage than the left side of the circuit ($u_{dc}$ and resistors), so the current can only flow in the negative sense of $i_{mod}$, which lets you observe the capacitor discharge through $R_p$.
 
-<img src="figures/LF_module_test_sequence_with_expected_results.png" alt="Low-frequency sequence" width="800"/>
+### Low-frequency sequence
 
-- The high-frequency sequence objective is to verify if the module is able to operate at higher switching frequencies, ranging from 50 Hz (corresponding to NLM operation) up to the kHz range (PWM). Both sequences tests the three states with both positive and negative current. The figure below shows the complete high-frequency sequence. As for the low-frequency sequence, a positive and negative current steps are defined according to the turn on and turn off moment of $u_{dc}$. Intead of keeping the module at one state, the high-frequency sequence alternates the module between connected and disconnected states at the target switching frequency to observe its behavior while switching.
+**Objective:** verify that the TWIST/SPIN board is correctly programmed and behaves like a half-bridge module, staying long enough in each state to observe it.
+
+| Part | Time | State | What is observed |
+|---|---|---|---|
+| Positive current | 0 – 0.1 s | Blocked | (1) Capacitor charges |
+| | 0.1 – 0.2 s | Connected | (1) Capacitor charges |
+| | 0.2 – 0.3 s | Disconnected | (2) Capacitor voltage remains unchanged |
+| | 0.3 – 0.4 s | Connected / Disconnected at 50 Hz | (3) Module voltage alternates between capacitor voltage and 0 V |
+| | 0.4 s – X | Disconnected | (4) Capacitor voltage remains unchanged |
+| Negative current | X – X+0.25 s | Disconnected | (4) Capacitor voltage remains unchanged |
+| | X+0.25 – X+0.35 s | Blocked | (4) Capacitor voltage remains unchanged |
+| | after X+0.35 s | Connected | (5) Capacitor discharges completely |
+
+<img src="figures/LF_module_test_sequence_with_expected_results.png" alt="Low-frequency sequence" width="1000"/>
+
+### High-frequency sequence
+
+**Objective:** verify that the module operates correctly at higher switching frequencies, from 50 Hz (NLM operation) up to the kHz range (PWM). Instead of staying in one state, the module alternates between connected and disconnected at the target switching frequency during short windows.
+
+| Part | Time | State | What is observed |
+|---|---|---|---|
+| Positive current | 0 – 0.35 s | Blocked | (1) Capacitor charges |
+| | 0.35 – 0.38 s | Connected / Disconnected in HF | (2) Module voltage alternates between capacitor voltage and 0 V |
+| | 0.38 s – X | Blocked | (3) Capacitor charges |
+| Negative current | X – X+0.3 s | Blocked | (4) Capacitor voltage remains unchanged |
+| | X+0.3 – X+0.33 s | Connected / Disconnected in HF | (5) Capacitor discharges completely during the connected state cycles |
+| | after X+0.33 s | Blocked | (6) Capacitor voltage remains at 0 V |
 
 <img src="figures/HF_module_test_sequence_with_expected_results.png" alt="High-frequency sequence" width="1000"/>
 
-Reminder: The user must manually TURN ON the udc power supply to start the sequence first part (positive current) and also TURN OFF udc to start the sequence second part (negative current).
+!!! warning Reminder
+    You must manually TURN ON the $u_{dc}$ power supply to start the positive current part, and TURN OFF $u_{dc}$ to start the negative current part.
 
 ## Required Hardware list:
 - 1 TWIST boards with SPIN
@@ -78,12 +106,14 @@ Repeat for the stack modules boards, if not done yet:
 
 4.	Recommended for a typical MMC behavior: Configure all 5 modules boards with the minor hardware modifications indicated in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_modifications_MMC_tutorial.md).
 
-5.  Calibrate the module sensors as explained in the [tutorial](../../../MMC_documentation/Prototype%20tutorials/twist_calibration_tutorial.md).
+5.  Calibrate the module sensors. You can do it in two ways:
+    - manually, reading the measurements on the serial monitor and computing the gains and offsets in a spreadsheet, as explained in the [manual calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_tutorial.md);
+    - automatically, with MATLAB and a PicoScope acquiring the measurements and computing the gains and offsets, as explained in the [automated calibration tutorial](../../../MMC_documentation/Prototype%20tutorials/module_calibration_automated_tutorial.md).
 
 ## Module hardware setup
 
 6.	Connect the module to an External Auxiliary DC Power Supply to the TWIST via the 6 V and 6VGND PINs. Make sure the External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. Make sure these power supplies OUTPUT IS OFF.
-7.	Connect the board with the power supply, the R and Rdec resistances and PC as in the image: 
+7.	Connect the board with the power supply, the $R_s$ and $R_p$ resistances and PC as in the image: 
 
 <img src="figures/MMC_module_test_experimental_electrical_circuit.png" alt="Module hardware setup" width="800"/>
 
@@ -91,7 +121,7 @@ Repeat for the stack modules boards, if not done yet:
 
 After making the connections and connecting the PC to board the USB-C cable, you should have something like this:
 
-<img src="figures/MMC_module_test_setup.png" alt="Implementation example" width="600"/>
+<img src="figures/MMC_module_test_setup.png" alt="Implementation example" width="500"/>
 
 9.	Configure your Oscilloscope. Recommended configurations are:
 - 200 ms/div configuration with sampling interval around 1 µs (x5 smaller than critical task period)
@@ -99,19 +129,18 @@ After making the connections and connecting the PC to board the USB-C cable, you
 
 ## Executing the LF module test
 
-10.	Verify you got correct test code using “MMC module test sequence” button.
-11.	Set the "SEQUENCE" variable to "LF".
-12.	Build ![](figures/build.png) and Upload ![](figures/upload.png) the code main.cpp into the board.
-13.	Make sure the 6 V External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
+10.	Verify you got correct test code using “MMC module LF test sequence” button.
+11.	Build ![](figures/build.png) and Upload ![](figures/upload.png) the code main.cpp into the board.
+12.	Make sure the 6 V External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
 
 The boards starts in IDLE mode (equal to module blocked state).
-14.	TURN ON the main power supply output. This will start the sequence first part (positive current).
-15.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
-16.	Save your oscilloscope data.
+13.	TURN ON the main power supply output. This will start the sequence first part (positive current).
+14.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
+15.	Save your oscilloscope data.
 
 ## Stopping tutorial
 
-17.	TURN OFF the 6V External Auxiliary DC Power Supply output.
+16.	TURN OFF the 6V External Auxiliary DC Power Supply output.
 
 ## Expected results for the LF module test
 
@@ -119,24 +148,45 @@ In the low-frequency sequence, the module expected behavior is as shown in the f
 
 <img src="figures/LF_module_test_results.png" alt="LF module test results with minor hardware modifications" width="600"/>
 
+When the voltage source is turned on ($u_{dc}$ = 48 V) during the blocked state at t = 0 s, the module and capacitor voltages charge with a positive module current peak of $i_{mod}$ = 0.9 A. In the connected state at t = 0.1 s, they keep charging until $v_{mod} = v_{cap}$ = 24 V is reached.
+
+In the disconnected state at t = 0.2 s, the module voltage drops to zero ($v_{mod}$ = 0 V) and the module current increases to $i_{mod}$ = 1.6 A, since it circulates through the Q2 switch. The capacitor voltage remains at $v_{cap}$ = 24 V.
+
+When the module switches between connected and disconnected at t = 0.3 s, the module voltage $v_{mod}$ alternates between $v_{cap}$ = 24 V and 0 V, while the module current $i_{mod}$ alternates between 0 A and 1.6 A.
+
+Back to the disconnected state at t = 0.4 s, the capacitor voltage remains at $v_{cap}$ = 24 V, even when the voltage source is turned off ($u_{dc}$ = 0 V) at t = 0.45 s, because the module capacitor is no longer connected to the circuit (Q1 switch is open).
+
+In the blocked state at t = 0.7 s, the capacitor voltage remains at $v_{cap}$ = 24 V, since negative currents are blocked by the freewheeling diode.
+
+When the module goes to the connected state at t = 0.8 s, the capacitor discharges through $R_p$, producing a negative current peak of $i_{mod}$ = -0.8 A. This result confirms the expected behavior of a half-bridge module.
+
 ## Executing the HF module test
 
-10.	Verify you got correct test code using “MMC module test sequence”  button.
-11.	Set the "SEQUENCE" variable to "HF".
-12.	Build ![](figures/build.png) and Upload ![](figures/upload.png) the code main.cpp into the board.
-13.	Make sure the 6 V External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
+17.	Verify you got correct test code using “MMC module HF test sequence”  button.
+18.	Build ![](figures/build.png) and Upload ![](figures/upload.png) the code main.cpp into the board.
+19.	Make sure the 6 V External Auxiliary DC Power Supply is configured to deliver 6 V with limiting current above 0.5 A. TURN ON the External Auxiliary DC Power Supply output.
 
 The boards starts in IDLE mode (equal to module blocked state).
-14.	TURN ON the main power supply output. This will start the sequence first part (positive current).
-15.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
-16.	Save your oscilloscope data.
+20.	TURN ON the main power supply output. This will start the sequence first part (positive current).
+21.	After you verify the first sequence part is finished (after 0.5 s), TURN OFF the main power supply output. This will start the sequence second part.
+22.	Save your oscilloscope data.
 
 ## Stopping tutorial
 
-17.	TURN OFF the 6 VExternal Auxiliary DC Power Supply output.
+23.	TURN OFF the 6 VExternal Auxiliary DC Power Supply output.
 
 ## Expected results for the HF module test
 
 In the high-frequency sequence, the module expected behavior is as shown in the figure below if you perform the minor hardware modifications recommended for MMC usage:
 
 <img src="figures/HF_module_test_results.png" alt="HF module test results with minor hardware modifications" width="600"/>
+
+When the voltage source is turned on ($u_{dc}$ = 48 V) during the blocked state at t = 0 s, the module and capacitor voltages charge to $v_{mod} = v_{cap}$ = 24 V, with a positive module current peak of $i_{mod}$ = 0.4 A, since the positive current flows through the Q1 freewheeling diode into the capacitor. The module stays in the blocked state until t = 0.35 s, with $v_{mod} = v_{cap}$ = 24 V and no current.
+
+When the module switches between connected and disconnected in high frequency at t = 0.35 s, the module voltage $v_{mod}$ alternates between $v_{cap}$ and 0 V, while the module current $i_{mod}$ alternates between 0 A and 1.5 A.
+
+Back to the blocked state at t = 0.38 s, the positive current charges the capacitor again through the Q1 freewheeling diode, keeping it at $v_{cap}$ = 24 V. When the voltage source is turned off ($u_{dc}$ = 0 V) at t = 0.45 s, the module voltage drops to $v_{mod}$ = 0 V, as the small negative current flows through the Q2 freewheeling diode, while the capacitor voltage remains at $v_{cap}$ = 24 V, since the Q1 diode blocks the negative current.
+
+When the module switches again between connected and disconnected in high frequency at t = 0.8 s, the capacitor discharges through $R_p$ during the connected state cycles: $v_{cap}$ drops to 0 V in about 0.03 s, the module voltage $v_{mod}$ shows a peak of 27 V that decreases with the capacitor voltage, and the module current reaches a negative peak of $i_{mod}$ = -0.7 A.
+
+In the final blocked state, all voltages and currents remain at zero. This result confirms that the half-bridge module behaves correctly while switching at high frequency.

@@ -1,0 +1,114 @@
+# MMC stack test simulation with open-loop control in Simulink with TWIST-based MMC module model
+
+## Context
+
+In this simulation we reproduce the experimental test of a MMC stack with 5 modules. The simulation can be either done using circuit 1 or circuit 2 represented in the figure. In circuit#2, $R_{dec}$ resistance is connected in parallel to the module in order to emulate negative currents discharging the module capacitor.
+
+<img width="877" height="492" alt="image" src="https://github.com/user-attachments/assets/1170f8a5-6cde-487d-a8d3-f4be33b4dc3e" />
+
+In experiments, a TWIST board is used as a HB module of the MMC by programming its second leg (LEG2) to be deactivated, having the following circuit. Observe that the HIGH terminals are open (Vhigh to GND). This is reproduced in Simulink using the TWIST board model.
+
+<img width="930" height="292" alt="image" src="https://github.com/user-attachments/assets/10807b55-72c9-4e88-b6c3-b971613964ae" />
+
+The test consists of using NLM modulation to connect/disconnect modules in order to generate close to sinusoidal stack voltage with a DC component of half the amplitude.
+
+The NLM modulation consists of attributing levels according to the modulation signal amplitude using the function round such that the level attributed to the modulation signal is the nearest integer and its principle is represented here:
+
+<img width="535" height="92" alt="image" src="https://github.com/user-attachments/assets/74da965e-80fd-4cbb-880d-40876b350559" />
+
+For example, if the modulation signal is 2.6, it is going to be attributed to level 3. For the MMC, the modulation signal is a sinusoidal wave, making that the NLM modulation result is a stepped wave-form as shown:
+
+<img width="696" height="477" alt="image" src="https://github.com/user-attachments/assets/01411f54-3f82-4d93-9f90-3989b0d5dcd1" />
+
+This stepped wave-form output of the NLM indicates how many modules should be connected in the arm ($N_{\left(u,l\right),p}^{on}$) according to time.
+
+In this simulation, no Capacitor Voltage Balancing (CVB) algorithm is used and the choice of connected modules is given by a fixed preference order M1 > M2 > M3 > M4 > M5
+
+## Simulink Circuit
+
+The Simulink circuit of MMC_stack_openloop_NLM_noCVB_twist_HAAS_20260219.slx represents the experimental test circuit. Extra capacitances can be added to the module via Vhigh terminals of the modules such as done experimentally.
+
+<img width="1484" height="744" alt="image" src="https://github.com/user-attachments/assets/9fd6e322-05f7-41e7-b35c-db6996f033de" />
+
+Inside the module block, the TWIST board model is used as programmed like a Half-Bridge (HB) module.
+
+<img width="801" height="602" alt="image" src="https://github.com/user-attachments/assets/15a66fe3-af3d-486c-be73-052481ed3291" />
+
+Inside the control, the NLM modulation is generated using:
+
+<img width="631" height="173" alt="image" src="https://github.com/user-attachments/assets/38739e50-5f95-4ef4-b868-6eb1131dc260" />
+
+The fixed preference order is set on the first sorting block (black) and the algorithm block (white) decides the modules to connect. The algorithm is only executed if the number of connected modules demanded by the modulation changes.
+
+<img width="906" height="465" alt="image" src="https://github.com/user-attachments/assets/e45ea0d2-8d91-4546-872b-d23b55b4dcac" />
+
+## Inputs
+
+The simulation can be configured using the following inputs on the script_MMC_stack_openloop_NLM_noCVB_twist_HAAS_20260219.m file:
+
+- Inputs for Twist configuration
+
+```
+data_save = false; % true : save data in a .mat file the following data
+power_losses = false; % true : takes into account power losses from the MOSFETs / false : no power losses
+isInterleaved = false; % true : 180° phase shift between leg 1 and leg 2 / false : 0° phase shift
+isC1low1Active = false; % true : Q5 is closed / false : Q5 is open
+isC2low1Active = false; % true : Q6 is closed / false : Q6 is open
+is6VExternallySupplied = false; % true : 6 V external supply is used to supply auxiliary circuits / false : feeder is used to supply auxiliary circuits
+isFeederJumperOpen = false; % true : feeder disconnected from the board circuit / false : feeder can be used
+```
+
+- Inputs for simulation configuration
+
+```
+latest_sim_name = 'MMC_stack_openloop_NLM_CVB_twist_HAAS_20260219.slx'; % Simulink simulation to execute
+latest_test_parameters = "param_stack_sim_HAAS_20260219.m"; % Circuit parameters (udc, R, Rdec, etc...)
+latest_twist_parameters = "twist_parameters.m"; % TWIST parameters (specifications from TWIST KICAD or obtained experimentally)
+sim_time = 1; % [s] Overall simulation time
+t_init_sim = -0.01; % [s] Simulation start time
+Ts = 1e-6; % [s] Simulation sample period
+```
+
+- Inputs for test sequence configuration
+
+```
+time_charge = 0.2; % [s] Modules capacitors charging phase duration
+time_decharge = 0.8; % [s] Start of modules discharge (VDC = 0V turned off)
+```
+
+## Outputs
+
+The simulation results can be observed via the scope area or one can plot externally the results by using the simulation output variables:
+
+```
+out.i_u : stores stack current i_u
+out.vm_u : stores the stack voltage
+out.vc_1 : stores module M1 capacitor voltage vc_M1
+out.vc_2 : stores module M2 capacitor voltage vc_M2
+out.vc_3 : stores module M3 capacitor voltage vc_M3
+out.vc_4 : stores module M4 capacitor voltage vc_M4
+out.vc_5 : stores module M1 capacitor voltage vc_M5
+out.vm_1 : stores module M1 voltage vm_M1
+out.vm_2 : stores module M2 voltage vm_M2
+out.vm_3 : stores module M3 voltage vm_M3
+out.vm_4 : stores module M4 voltage vm_M4
+out.vm_5 : stores module M1 voltage vm_M5
+out.vd : stores protection diode voltage v_d
+out.m_u : stores the sinusoidal open-loop reference for stack voltage (NLM modulation input)
+out.N_u : stores the number of connected modules on the stack (NLM modulation output)
+out.i_u_M1_meas : stores stack current i_u measured by M1 that is used on the CVB algorithm
+```
+
+The outputs are saved if data_save option is true in to "sim_results" folder
+
+## Executing the simulation
+
+1.	Clone this repository or download the "noCVB" folder in your PC.
+2.	In matlab, go to "noCVB" folder.
+3.	Open script_MMC_stack_openloop_NLM_noCVB_twist_HAAS_20260219.m file.
+4.	Configure your simulation using the script inputs.
+5.	Save and run script_MMC_stack_openloop_NLM_noCVB_twist_HAAS_20260219.m.
+
+The simulink simulation window will appear and simulation will start
+
+6.	Observe the results via scope our by plotting the saved outputs
