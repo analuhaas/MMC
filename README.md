@@ -1,4 +1,4 @@
-# CARROTS MMC
+# MMC
 
 This repository contains the codes, simulation models and documentation of the open-source Modular Multilevel Converter (MMC) developed in the **CARROTS** project with [OwnTech](https://www.owntech.io/) suite.
 
@@ -22,7 +22,7 @@ CARROTS proposes to replace the master controller by a local controller (LC) in 
 
 CARROTS aims to develop a **generic, masterless and open-source MMC**:
 
-- **Generic**: reprogrammable modules that can be used as half-bridge (HB) or full-bridge (FB) modules, with distributed inductance.
+- **Generic**: the proposed converter will be based on standard blocks and must be adaptable to different voltage and power levels.
 - **Masterless**: the control is distributed between the modules, without a central controller.
 - **Open-source**: the hardware and software are based on the OwnTech TWIST and SPIN boards, and are shared openly.
 
@@ -30,7 +30,7 @@ To reach this objective, the project addresses three scientific barriers, each o
 
 | Work package | Barrier | Topics |
 |---|---|---|
-| **WP1 – Power** | Sizing and modeling the converter | Sizing of the modules, frugal digital twins |
+| **WP1 – Power** | Sizing, modeling and testing the converter | Sizing of generic converters, frugal digital twins, prototype test protocols |
 | **WP2 – Control** | Controlling the MMC without a master | Cooperative distributed control |
 | **WP3 – Data** | Exchanging data between the modules | Peer-to-peer real-time communication |
 | **WP4 – Integration** | Building and testing the prototypes | Integration of power, control and data in the MMC prototypes |
@@ -49,15 +49,29 @@ The control is decentralized in two steps:
 
 *MMC V2: cross-arm control and data decentralization.*
 
-### Consortium
+### Contributors
 
-- GeePs (coordinator: Loïc Quéval)
+4 laboratories and OwnTech contributes to the development of this open-source MMC:
+- GeePs
+    * Ana Luiza HAAS BEZERRA (PhD student WP1)
+    * Noemi LANCIOTTI
+    * Alexandre BACH
+    * Loïc QUÉVAL
 - G2ELab
+    * Zaid JABBAR (PhD student WP2)
+    * Adrien CORNE
+    * David FREY
 - LAAS-CNRS
+    * Ayoub FARAH (PhD student WP3)
+    * Clément FOUCHER
+    * Luiz VILLA
 - L2EP
+    * François GRUSON
 - [OwnTech Technologies](https://www.owntech.io/)
+    * Jean ALINEI (Engineer WP4)
 
-The CARROTS project is funded by the French National Research Agency (ANR) under the grant ANR-24-CE05-0920-01.
+
+The CARROTS project is funded by the French National Research Agency (ANR) under the grant ANR-24-CE05-0920-01. The coordinator is Loïc Quéval.
 
 ## Repository content
 
@@ -123,13 +137,8 @@ The stack and phase models couple hardware, communication and control blocks, wh
 ## Getting started
 
 1. Install [Git](https://git-scm.com/) and [VS Code with PlatformIO](https://platformio.org/install/ide?install=vscode), as explained in the [getting started tutorial](MMC_documentation/Getting%20started/Vscode_for_OwnTech_configuration.md).
-2. Clone this repository:
-
-   `git clone https://github.com/owntech-foundation/MMC.git carrots_mmc`
-
-3. Clone the OwnTech Power API core project and open it in VS Code with `File > Open Folder...`. The application code goes in `src/main.cpp`, and the project is configured in `platformio.ini`.
-4. Load the MMC codes in the project: in `platformio.ini`, replace the `owntech_examples` link with `https://github.com/analuhaas/examples.git`, then click on the PlatformIO icon and select the code under `Examples Twist` in the Project Tasks tab. The `main.cpp` files in [MMC_codes](MMC_codes) are the same codes, for reference.
-5. Follow the tutorial of the code in [MMC_documentation](MMC_documentation).
+2. Load the MMC codes in the project: in `platformio.ini`, replace the `owntech_examples` link with `https://github.com/analuhaas/examples.git`, then click on the PlatformIO icon and select the code under `Examples Twist` in the Project Tasks tab. The `main.cpp` files in [MMC_codes](MMC_codes) are the same codes, for reference.
+3. Follow the tutorial of the code in [MMC_documentation](MMC_documentation).
 
 For more information about the OwnTech Power API, see the [OwnTech documentation](https://docs.owntech.org/).
 
